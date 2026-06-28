@@ -1,4 +1,4 @@
-export default function Calendar() {
+export default function CalendarPage() {
   return (
     <main>
       <h1>Calendar</h1>

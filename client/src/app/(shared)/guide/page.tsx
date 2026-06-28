@@ -1,4 +1,4 @@
-export default function Guide() {
+export default function GuidePage() {
   return (
     <main>
       <h1>Guide</h1>

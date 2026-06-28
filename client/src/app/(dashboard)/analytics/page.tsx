@@ -1,4 +1,4 @@
-export default function Analytics() {
+export default function AnalyticsPage() {
   return (
     <main>
       <h1>Analytics</h1>

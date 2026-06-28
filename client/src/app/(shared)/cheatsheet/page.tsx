@@ -1,4 +1,4 @@
-export default function Cheatsheet() {
+export default function CheatsheetPage() {
   return (
     <main>
       <h1>Cheatsheet</h1>

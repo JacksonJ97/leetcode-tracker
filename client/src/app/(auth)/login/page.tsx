@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <main>
       <h1>Log in</h1>
