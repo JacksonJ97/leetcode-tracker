@@ -1,8 +1,8 @@
 export default function CalendarPage() {
   return (
-    <main>
+    <div>
       <h1>Calendar</h1>
-      <p>Calendar view for reviewing leetcode problems</p>
-    </main>
+      <p>View your scheduled problems</p>
+    </div>
   );
 }

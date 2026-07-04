@@ -1,8 +1,8 @@
 export default function TrackerPage() {
   return (
-    <main>
+    <div>
       <h1>Tracker</h1>
       <p>Track your progress</p>
-    </main>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 export default function LandingPage() {
   return (
-    <main>
+    <div>
       <h1>LeetCode Tracker</h1>
-    </main>
+    </div>
   );
 }
