@@ -1,21 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0b0f14;
-  --foreground: #e5e7eb;
-  --primary: #6366f1;
+  /* Backgrounds */
+  --background: #0e0e10; /* main background */
+  --surface: #18181b; /* cards, inputs, panels */
+
+  /* Borders */
+  --border: #2c2c31; /* dividers, card borders, input borders */
+
+  /* Text */
+  --foreground: #f3f3f4; /* headings or body */
+  --foreground-muted: #a1a1aa; /* descriptions or secondary text */
+  --foreground-subtle: #71717a; /* labels or placeholders */
+
+  /* Brand */
+  --primary: #33b7a0; /* buttons, links */
+  --primary-hover: #40c7af; /* hover states */
+  --primary-active: #2ca38e; /* active states */
 }
 
 @theme inline {
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
+
+  /* Backgrounds */
+  --color-background: #0e0e10;
+  --color-surface: #18181b;
+
+  /* Borders */
+  --color-border: #2c2c31;
+
+  /* Text */
+  --color-foreground: #f3f3f4;
+  --color-foreground-muted: #a1a1aa;
+  --color-foreground-subtle: #71717a;
+
+  /* Brand */
+  --color-primary: #33b7a0;
+  --color-primary-hover: #40c7af;
+  --color-primary-active: #2ca38e;
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
+  background: var(--background);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
