@@ -22,6 +22,12 @@
   /* --primary: #EDEDEF; */
   /* --primary-hover: #FFFFFF; */
   /* --primary-active: #D0D0D4; */
+
+  /* Semantic */
+  --danger: #ef6f6c;
+  --warning: #f2a354;
+  --success: #5ad4a0;
+  --info: #58a6ff;
 }
 
 @theme inline {
@@ -45,6 +51,12 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-active: var(--primary-active);
+
+  /* Semantic */
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-info: var(--info);
 }
 
 body {
