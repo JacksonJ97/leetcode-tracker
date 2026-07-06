@@ -9,14 +9,19 @@
   --border: #2c2c31; /* dividers, card borders, input borders */
 
   /* Text */
-  --foreground: #f3f3f4; /* headings or body */
-  --foreground-muted: #a1a1aa; /* descriptions or secondary text */
-  --foreground-subtle: #71717a; /* labels or placeholders */
+  --foreground: #ededef; /* headings or body */
+  --foreground-muted: #9a9aa1; /* descriptions or secondary text */
+  --foreground-subtle: #6b6b72; /* labels or placeholders */
 
   /* Brand */
-  --primary: #33b7a0; /* buttons, links */
-  --primary-hover: #40c7af; /* hover states */
-  --primary-active: #2ca38e; /* active states */
+  --primary: #9c87f5; /* buttons, links, etc. */
+  --primary-hover: #a491fb; /* hover states */
+  --primary-active: #8c73e1; /* active states */
+
+  /* Backup Brand */
+  /* --primary: #EDEDEF; */
+  /* --primary-hover: #FFFFFF; */
+  /* --primary-active: #D0D0D4; */
 }
 
 @theme inline {
@@ -25,24 +30,25 @@
   --font-mono: var(--font-geist-mono);
 
   /* Backgrounds */
-  --color-background: #0e0e10;
-  --color-surface: #18181b;
+  --color-background: var(--background);
+  --color-surface: var(--surface);
 
   /* Borders */
-  --color-border: #2c2c31;
+  --color-border: var(--border);
 
   /* Text */
-  --color-foreground: #f3f3f4;
-  --color-foreground-muted: #a1a1aa;
-  --color-foreground-subtle: #71717a;
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
 
   /* Brand */
-  --color-primary: #33b7a0;
-  --color-primary-hover: #40c7af;
-  --color-primary-active: #2ca38e;
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
 }
 
 body {
+  position: relative;
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
