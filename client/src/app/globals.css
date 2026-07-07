@@ -10,6 +10,7 @@
 
   /* Text */
   --foreground: #ededef; /* headings or body */
+  --foreground-inverse: #1b1230; /* text on primary or dark backgrounds */
   --foreground-muted: #9a9aa1; /* descriptions or secondary text */
   --foreground-subtle: #6b6b72; /* labels or placeholders */
 
@@ -44,6 +45,7 @@
 
   /* Text */
   --color-foreground: var(--foreground);
+  --color-foreground-inverse: var(--foreground-inverse);
   --color-foreground-muted: var(--foreground-muted);
   --color-foreground-subtle: var(--foreground-subtle);
 
