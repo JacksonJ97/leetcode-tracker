@@ -3,13 +3,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/functions";
 
 const variants = cva(
-  "focus-visible:ring-foreground focus-visible:border-foreground inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border border-transparent font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50",
-  // "group/button active:not-aria-[haspopup]:translate-y-px [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent leading-none font-medium whitespace-nowrap transition-[background-color] select-none focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-white disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         solid:
-          "bg-primary hover:bg-primary-hover active:bg-primary-active text-foreground-inverse",
+          "bg-primary hover:bg-primary-hover active:bg-primary-active text-foreground-inverse border-primary",
+        outline:
+          "border-border text-foreground hover:bg-surface active:bg-background bg-transparent",
         // default: "bg-primary text-primary-foreground hover:bg-primary/80",
         // outline:
         //   "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
@@ -22,26 +23,14 @@ const variants = cva(
         // link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        sm: "h-8 px-3 py-1.5 text-sm",
-        md: "h-10 px-4 py-2 text-sm",
-        lg: "h-12 px-5 py-2.5 text-base",
-        // default:
-        //   "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        // xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        // sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        // lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        // icon: "size-8",
-        // "icon-xs":
-        //   "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        // "icon-sm":
-        //   "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-        // "icon-lg": "size-9",
+        sm: "h-8 px-3 text-sm [&_svg]:size-4",
+        md: "h-10 px-4 text-sm [&_svg]:size-4",
+        lg: "h-12 px-5 text-base [&_svg]:size-5",
+        "icon-sm": "size-7 [&_svg]:size-4",
+        icon: "size-8 [&_svg]:size-4",
+        "icon-lg": "size-9 [&_svg]:size-5",
       },
     },
-    // defaultVariants: {
-    //   variant: "default",
-    //   size: "default",
-    // },
   },
 );
 

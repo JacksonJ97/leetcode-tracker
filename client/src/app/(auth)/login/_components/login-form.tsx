@@ -13,7 +13,7 @@ const schema = z.object({
 });
 
 export default function LoginForm() {
-  const form = useForm<z.infer<typeof schema>>({
+  const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       email: "",
@@ -23,12 +23,12 @@ export default function LoginForm() {
 
   return (
     <form
-      className="flex flex-col gap-6"
-      onSubmit={form.handleSubmit((data) => console.log(data))}
+      className="flex flex-col gap-4"
+      onSubmit={handleSubmit((data) => console.log(data))}
     >
       <Controller
         name="email"
-        control={form.control}
+        control={control}
         render={({
           field: { ref, name, value, onBlur, onChange },
           fieldState: { error, invalid, isDirty, isTouched },
@@ -42,21 +42,21 @@ export default function LoginForm() {
             <FieldLabel>Email</FieldLabel>
             <Input
               type="email"
-              autoComplete="off"
+              autoComplete="email"
               placeholder="you@example.com"
               ref={ref}
               value={value}
               onBlur={onBlur}
               onValueChange={onChange}
             />
-            <FieldError match={!!error}>{error?.message}</FieldError>
+            <FieldError match={invalid}>{error?.message}</FieldError>
           </Field>
         )}
       />
 
       <Controller
         name="password"
-        control={form.control}
+        control={control}
         render={({
           field: { ref, name, value, onBlur, onChange },
           fieldState: { error, invalid, isDirty, isTouched },
@@ -76,7 +76,7 @@ export default function LoginForm() {
               onBlur={onBlur}
               onValueChange={onChange}
             />
-            <FieldError match={!!error}>{error?.message}</FieldError>
+            <FieldError match={invalid}>{error?.message}</FieldError>
           </Field>
         )}
       />

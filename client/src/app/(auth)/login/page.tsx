@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Button } from "@/components/Button";
 import { FieldSeparator } from "@/components/Field";
-import LoginForm from "@/app/(auth)/login/_components/LoginForm";
+import LoginForm from "@/app/(auth)/login/_components/login-form";
+import GithubSSO from "@/app/(auth)/login/_components/github-sso";
+import GoogleSSO from "@/app/(auth)/login/_components/google-sso";
 
 export default function LoginPage() {
   return (
@@ -19,11 +20,11 @@ export default function LoginPage() {
         Forgot password?
       </Link>
 
-      <FieldSeparator className="my-6">or</FieldSeparator>
+      <FieldSeparator className="my-5">or</FieldSeparator>
 
-      <div className="mb-6 flex items-center gap-4">
-        <Button className="flex-1">Github</Button>
-        <Button className="flex-1">Google</Button>
+      <div className="mb-6 flex flex-col items-center gap-5">
+        <GithubSSO className="w-full" />
+        <GoogleSSO className="w-full" />
       </div>
 
       <p className="text-foreground-muted text-sm">
