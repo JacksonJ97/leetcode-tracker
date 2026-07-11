@@ -7,7 +7,9 @@ import LoginForm from "@/app/(auth)/login/_components/login-form";
 export default function LoginPage() {
   return (
     <div className="w-full max-w-sm">
-      <h1 className="mb-6 text-3xl font-semibold">Welcome Back</h1>
+      <header className="mb-6">
+        <h1 className="text-3xl font-semibold">Welcome Back</h1>
+      </header>
 
       <LoginForm />
 

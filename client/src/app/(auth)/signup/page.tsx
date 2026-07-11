@@ -7,7 +7,9 @@ import SignupForm from "@/app/(auth)/signup/_components/signup-form";
 export default function SignupPage() {
   return (
     <div className="w-full max-w-sm">
-      <h1 className="mb-6 text-3xl font-semibold">Start Tracking</h1>
+      <header className="mb-6">
+        <h1 className="text-3xl font-semibold">Start Tracking</h1>
+      </header>
 
       <SignupForm />
 
