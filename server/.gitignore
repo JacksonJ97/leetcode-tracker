@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Production
+/dist
+
+# Env files
+.env
+.env.production
+
+# Debug
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Misc
+.DS_Store
