@@ -3,24 +3,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/functions";
 
 const variants = cva(
-  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent leading-none font-medium whitespace-nowrap transition-[background-color] select-none focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-white disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "focus-visible:outline-focus-ring inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent leading-none font-medium whitespace-nowrap transition-[background-color] duration-100 select-none focus-visible:outline-2 focus-visible:outline-offset-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         solid:
-          "bg-primary hover:bg-primary-hover active:bg-primary-active text-foreground-inverse border-primary",
+          "bg-primary text-foreground-on-primary hover:bg-primary-hover active:bg-primary-active",
         outline:
-          "border-border text-foreground hover:bg-surface active:bg-background bg-transparent",
-        // default: "bg-primary text-primary-foreground hover:bg-primary/80",
-        // outline:
-        //   "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
-        // secondary:
-        //   "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
-        // ghost:
-        //   "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
-        // destructive:
-        //   "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        // link: "text-primary underline-offset-4 hover:underline",
+          "border-border text-foreground hover:bg-surface active:bg-surface-interactive bg-transparent",
+        ghost:
+          "text-foreground hover:bg-surface active:bg-surface-interactive bg-transparent",
+        secondary:
+          "bg-surface-interactive text-foreground hover:bg-surface-interactive-hover active:bg-surface-interactive-active",
+        destructive:
+          "bg-destructive text-foreground-on-destructive hover:bg-destructive-hover active:bg-destructive-active",
       },
       size: {
         sm: "h-8 px-3 text-sm [&_svg]:size-4",

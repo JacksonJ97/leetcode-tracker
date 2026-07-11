@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/Link";
 import { FieldSeparator } from "@/components/Field";
 import LoginForm from "@/app/(auth)/login/_components/login-form";
 import GithubSSO from "@/app/(auth)/login/_components/github-sso";
@@ -13,10 +13,7 @@ export default function LoginPage() {
 
       <LoginForm />
 
-      <Link
-        href="/forgot-password"
-        className="text-primary hover:text-primary-hover mt-4 block w-fit text-sm"
-      >
+      <Link href="/forgot-password" className="mt-4 block w-fit text-sm">
         Forgot password?
       </Link>
 
@@ -28,10 +25,7 @@ export default function LoginPage() {
       </div>
 
       <p className="text-foreground-muted text-sm">
-        Don&apos;t have an account?{" "}
-        <Link href="/signup" className="text-primary hover:text-primary-hover">
-          Sign up
-        </Link>
+        Don&apos;t have an account? <Link href="/signup">Sign up</Link>
       </p>
     </div>
   );
