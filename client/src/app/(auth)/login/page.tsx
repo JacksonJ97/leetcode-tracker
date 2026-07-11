@@ -7,7 +7,7 @@ import LoginForm from "@/app/(auth)/login/_components/login-form";
 export default function LoginPage() {
   return (
     <div className="w-full max-w-sm">
-      <h1 className="mb-4 text-2xl font-semibold">Welcome Back</h1>
+      <h1 className="mb-6 text-3xl font-semibold">Welcome Back</h1>
 
       <LoginForm />
 
@@ -17,9 +17,9 @@ export default function LoginPage() {
 
       <FieldSeparator className="my-6">or</FieldSeparator>
 
-      <div className="mb-6 flex flex-col items-center gap-4">
-        <GithubSSO className="w-full" />
-        <GoogleSSO className="w-full" />
+      <div className="mb-6 flex flex-col gap-4">
+        <GithubSSO />
+        <GoogleSSO />
       </div>
 
       <p className="text-foreground-muted text-sm">
