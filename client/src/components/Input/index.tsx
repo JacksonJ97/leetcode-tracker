@@ -1,7 +1,7 @@
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import { cn } from "@/utils/functions";
 
-function Input({ type, className, ...props }: InputPrimitive.Props) {
+function Input({ type = "text", className, ...props }: InputPrimitive.Props) {
   return (
     <InputPrimitive
       type={type}

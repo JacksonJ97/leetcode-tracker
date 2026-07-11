@@ -1,15 +1,13 @@
 import { Link } from "@/components/Link";
 import { FieldSeparator } from "@/components/Field";
+import GithubSSO from "@/components/GithubSSO";
+import GoogleSSO from "@/components/GoogleSSO";
 import LoginForm from "@/app/(auth)/login/_components/login-form";
-import GithubSSO from "@/app/(auth)/login/_components/github-sso";
-import GoogleSSO from "@/app/(auth)/login/_components/google-sso";
 
 export default function LoginPage() {
   return (
     <div className="w-full max-w-sm">
-      <h1 className="mb-6 text-2xl font-semibold">
-        Log in to Leetcode Tracker
-      </h1>
+      <h1 className="mb-4 text-2xl font-semibold">Welcome Back</h1>
 
       <LoginForm />
 
@@ -17,9 +15,9 @@ export default function LoginPage() {
         Forgot password?
       </Link>
 
-      <FieldSeparator className="my-5">or</FieldSeparator>
+      <FieldSeparator className="my-6">or</FieldSeparator>
 
-      <div className="mb-6 flex flex-col items-center gap-5">
+      <div className="mb-6 flex flex-col items-center gap-4">
         <GithubSSO className="w-full" />
         <GoogleSSO className="w-full" />
       </div>
