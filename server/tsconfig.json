@@ -2,11 +2,14 @@
   "compilerOptions": {
     "target": "es2025",
     "lib": ["es2025"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
 
-    "rootDir": "./src",
-    "outDir": "./dist",
+    "rootDir": ".",
+    "outDir": "dist",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -23,6 +26,6 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "drizzle.config.ts"],
   "exclude": ["node_modules", "dist"]
 }
