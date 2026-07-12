@@ -2,25 +2,25 @@ import Link from "next/link";
 
 function Sidebar() {
   return (
-    <nav className="p-4">
+    <nav className="bg-surface border-border w-3xs border-r p-4">
       <ul>
         <li>
           <Link href="/dashboard">Home</Link>
         </li>
         <li>
-          <Link href="/dashboard/analytics">Analytics</Link>
+          <Link href="/dashboard/tracker">Tracker</Link>
         </li>
         <li>
           <Link href="/dashboard/calendar">Calendar</Link>
+        </li>
+        <li>
+          <Link href="/dashboard/analytics">Analytics</Link>
         </li>
         <li>
           <Link href="/dashboard/cheatsheet">Cheat Sheet</Link>
         </li>
         <li>
           <Link href="/dashboard/guide">Guide</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/tracker">Tracker</Link>
         </li>
       </ul>
     </nav>
