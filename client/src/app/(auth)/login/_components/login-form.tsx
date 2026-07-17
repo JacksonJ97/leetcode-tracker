@@ -1,8 +1,10 @@
 "use client";
 
 import z from "zod";
+import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { authClient } from "@/lib/auth-client";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import { Field, FieldLabel, FieldError } from "@/components/Field";
@@ -13,6 +15,8 @@ const schema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -21,11 +25,25 @@ export default function LoginForm() {
     },
   });
 
+  const onSubmit = handleSubmit(async (data) => {
+    await authClient.signIn.email(
+      {
+        email: data.email,
+        password: data.password,
+      },
+      {
+        onSuccess: () => {
+          router.replace("/dashboard");
+        },
+        onError: () => {
+          console.error("Login Error");
+        },
+      },
+    );
+  });
+
   return (
-    <form
-      className="flex flex-col gap-4"
-      onSubmit={handleSubmit((data) => console.log(data))}
-    >
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <Controller
         name="email"
         control={control}

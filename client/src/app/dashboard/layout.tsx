@@ -1,29 +1,33 @@
 import Link from "next/link";
+import SignOutButton from "@/app/dashboard/_components/signout-button";
 
 function Sidebar() {
   return (
-    <nav className="bg-surface border-border w-3xs border-r p-4">
-      <ul>
-        <li>
-          <Link href="/dashboard">Home</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/tracker">Tracker</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/calendar">Calendar</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/analytics">Analytics</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/cheatsheet">Cheat Sheet</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/guide">Guide</Link>
-        </li>
-      </ul>
-    </nav>
+    <div className="bg-surface border-border flex w-3xs flex-col justify-between border-r p-4">
+      <nav>
+        <ul>
+          <li>
+            <Link href="/dashboard">Home</Link>
+          </li>
+          <li>
+            <Link href="/dashboard/tracker">Tracker</Link>
+          </li>
+          <li>
+            <Link href="/dashboard/calendar">Calendar</Link>
+          </li>
+          <li>
+            <Link href="/dashboard/analytics">Analytics</Link>
+          </li>
+          <li>
+            <Link href="/dashboard/cheatsheet">Cheat Sheet</Link>
+          </li>
+          <li>
+            <Link href="/dashboard/guide">Guide</Link>
+          </li>
+        </ul>
+      </nav>
+      <SignOutButton />
+    </div>
   );
 }
 
