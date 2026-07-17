@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/Button";
-import { Google } from "@/components/Icon/google";
+import { Button } from "@/components/ui/button";
+import { Google } from "@/components/icons/google-icon";
 
 export default function GoogleSSO({
   ...props

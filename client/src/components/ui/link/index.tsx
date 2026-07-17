@@ -1,5 +1,5 @@
 import LinkPrimitive from "next/link";
-import { cn } from "@/utils/functions";
+import { cn } from "@/utils/classnames";
 
 function Link({
   className,

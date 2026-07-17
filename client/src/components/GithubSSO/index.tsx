@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/Button";
-import { GitHub } from "@/components/Icon/github";
+import { Button } from "@/components/ui/button";
+import { GitHub } from "@/components/icons/github-icon";
 
 export default function GithubSSO({
   ...props

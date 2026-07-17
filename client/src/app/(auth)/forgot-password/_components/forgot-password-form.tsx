@@ -3,9 +3,9 @@
 import z from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/Input";
-import { Button } from "@/components/Button";
-import { Field, FieldLabel, FieldError } from "@/components/Field";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 const schema = z.object({
   email: z.email(),
