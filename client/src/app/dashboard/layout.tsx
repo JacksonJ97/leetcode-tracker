@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignOutButton from "@/app/dashboard/_components/signout-button";
+import { SignOutButton } from "@/features/dashboard/signout-button";
 
 function Sidebar() {
   return (

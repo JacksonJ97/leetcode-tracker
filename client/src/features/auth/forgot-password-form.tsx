@@ -11,7 +11,7 @@ const schema = z.object({
   email: z.email(),
 });
 
-export default function ForgotPasswordForm() {
+function ForgotPasswordForm() {
   const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -19,11 +19,10 @@ export default function ForgotPasswordForm() {
     },
   });
 
+  const onSubmit = handleSubmit(() => {});
+
   return (
-    <form
-      className="flex flex-col gap-4"
-      onSubmit={handleSubmit((data) => console.log(data))}
-    >
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <Controller
         name="email"
         control={control}
@@ -56,3 +55,5 @@ export default function ForgotPasswordForm() {
     </form>
   );
 }
+
+export { ForgotPasswordForm };

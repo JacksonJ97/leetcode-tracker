@@ -14,7 +14,7 @@ const schema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
-export default function LoginForm() {
+function LoginForm() {
   const router = useRouter();
 
   const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
@@ -103,3 +103,5 @@ export default function LoginForm() {
     </form>
   );
 }
+
+export { LoginForm };

@@ -1,8 +1,7 @@
 import { Link } from "@/components/ui/link";
-import GithubSSO from "@/components/GithubSSO";
-import GoogleSSO from "@/components/GoogleSSO";
 import { FieldSeparator } from "@/components/ui/field";
-import SignupForm from "@/app/(auth)/signup/_components/signup-form";
+import { SignupForm } from "@/features/auth/signup-form";
+import { GithubSSO, GoogleSSO } from "@/features/auth/social-auth-buttons";
 
 export default function SignupPage() {
   return (

@@ -1,8 +1,7 @@
 import { Link } from "@/components/ui/link";
 import { FieldSeparator } from "@/components/ui/field";
-import GithubSSO from "@/components/GithubSSO";
-import GoogleSSO from "@/components/GoogleSSO";
-import LoginForm from "@/app/(auth)/login/_components/login-form";
+import { LoginForm } from "@/features/auth/login-form";
+import { GithubSSO, GoogleSSO } from "@/features/auth/social-auth-buttons";
 
 export default function LoginPage() {
   return (

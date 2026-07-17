@@ -38,7 +38,7 @@ const schema = z.object({
     ),
 });
 
-export default function SignupForm() {
+function SignupForm() {
   const router = useRouter();
 
   const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
@@ -184,3 +184,5 @@ export default function SignupForm() {
     </form>
   );
 }
+
+export { SignupForm };
