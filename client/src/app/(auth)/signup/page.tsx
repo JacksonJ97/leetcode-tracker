@@ -6,20 +6,20 @@ import { GithubSSO, GoogleSSO } from "@/features/auth/social-auth-buttons";
 export default function SignupPage() {
   return (
     <div className="w-full max-w-sm">
-      <header className="mb-6">
+      <header className="mb-8">
         <h1 className="text-3xl font-semibold">Start Tracking</h1>
       </header>
 
-      <SignupForm />
-
-      <FieldSeparator className="my-6">or</FieldSeparator>
-
-      <div className="mb-6 flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         <GithubSSO />
         <GoogleSSO />
       </div>
 
-      <p className="text-foreground-muted text-sm">
+      <FieldSeparator className="my-6">or</FieldSeparator>
+
+      <SignupForm />
+
+      <p className="text-foreground-muted mt-6 text-sm">
         Already have an account? <Link href="/login">Log in</Link>
       </p>
     </div>
