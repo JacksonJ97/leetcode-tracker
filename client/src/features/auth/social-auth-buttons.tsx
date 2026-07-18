@@ -6,7 +6,7 @@ function GithubSSO({ ...props }: React.ComponentProps<typeof Button>) {
   return (
     <Button variant="outline" {...props}>
       <GitHub />
-      Github
+      Continue with Github
     </Button>
   );
 }
@@ -15,7 +15,7 @@ function GoogleSSO({ ...props }: React.ComponentProps<typeof Button>) {
   return (
     <Button variant="outline" {...props}>
       <Google />
-      Google
+      Continue with Google
     </Button>
   );
 }

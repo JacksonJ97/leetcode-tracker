@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@/lib/auth-client";
+import { Link } from "@/components/ui/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/ui/password-input";
@@ -97,6 +98,10 @@ function LoginForm() {
           </Field>
         )}
       />
+
+      <div className="flex justify-end text-sm">
+        <Link href="/forgot-password">Forgot password?</Link>
+      </div>
 
       <Button type="submit">Log In</Button>
     </form>

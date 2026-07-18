@@ -10,20 +10,16 @@ export default function LoginPage() {
         <h1 className="text-3xl font-semibold">Welcome Back</h1>
       </header>
 
-      <LoginForm />
-
-      <Link href="/forgot-password" className="mt-4 block w-fit text-sm">
-        Forgot password?
-      </Link>
+      <div className="flex flex-col gap-4">
+        <GoogleSSO />
+        <GithubSSO />
+      </div>
 
       <FieldSeparator className="my-6">or</FieldSeparator>
 
-      <div className="mb-6 flex flex-col gap-4">
-        <GithubSSO />
-        <GoogleSSO />
-      </div>
+      <LoginForm />
 
-      <p className="text-foreground-muted text-sm">
+      <p className="text-foreground-muted mt-4 text-sm">
         Don&apos;t have an account? <Link href="/signup">Sign up</Link>
       </p>
     </div>

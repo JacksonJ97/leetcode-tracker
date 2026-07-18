@@ -194,9 +194,7 @@ function SignupForm() {
         )}
       />
 
-      <Button type="submit" className="mt-2">
-        Get Started
-      </Button>
+      <Button type="submit">Get Started</Button>
     </form>
   );
 }
