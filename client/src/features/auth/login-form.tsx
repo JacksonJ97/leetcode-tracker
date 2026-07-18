@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@/lib/auth-client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 const schema = z.object({
@@ -86,9 +87,7 @@ function LoginForm() {
             touched={isTouched}
           >
             <FieldLabel>Password</FieldLabel>
-            <Input
-              type="password"
-              placeholder="••••••••"
+            <PasswordInput
               ref={ref}
               value={value}
               onBlur={onBlur}
