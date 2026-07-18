@@ -2,14 +2,14 @@
 
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 
 function SignOutButton() {
   const router = useRouter();
 
   const handleClick = async () => {
-    await authClient.signOut({
+    await auth.signOut({
       fetchOptions: {
         onSuccess: () => {
           router.push("/login");

@@ -1,14 +1,16 @@
 "use client";
 
 import z from "zod";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckIcon, CircleIcon } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { auth } from "@/lib/auth-client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/password-input";
 import {
   Field,
@@ -55,6 +57,24 @@ const schema = z.object({
     }),
 });
 
+function getSignupErrorMessage(error: { code?: string; status: number }) {
+  if (error.status === 429) {
+    return "Too many signup attempts. Please wait and try again.";
+  }
+
+  switch (error.code) {
+    case "USER_ALREADY_EXISTS":
+    case "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL":
+      return "An account with this email already exists.";
+  }
+
+  if (error.status >= 500) {
+    return "We couldn't create your account. Please try again.";
+  }
+
+  return "We couldn't create your account. Check your details and try again.";
+}
+
 function PasswordRequirements({ password }: { password: string }) {
   return (
     <ul className="flex flex-col gap-1">
@@ -81,8 +101,13 @@ function PasswordRequirements({ password }: { password: string }) {
 
 function SignupForm() {
   const router = useRouter();
+  const [signupError, setSignupError] = useState<string | null>(null);
 
-  const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: "",
@@ -92,21 +117,20 @@ function SignupForm() {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    await authClient.signUp.email(
-      {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      },
-      {
-        onSuccess: () => {
-          router.replace("/dashboard");
-        },
-        onError: () => {
-          console.error("Signup Error");
-        },
-      },
-    );
+    setSignupError(null);
+
+    const { error } = await auth.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
+
+    if (error) {
+      setSignupError(getSignupErrorMessage(error));
+      return;
+    }
+
+    router.replace("/dashboard");
   });
 
   return (
@@ -194,7 +218,16 @@ function SignupForm() {
         )}
       />
 
-      <Button type="submit">Get Started</Button>
+      {signupError && (
+        <p role="alert" className="text-danger text-sm">
+          {signupError}
+        </p>
+      )}
+
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting && <Spinner />}
+        Get Started
+      </Button>
     </form>
   );
 }

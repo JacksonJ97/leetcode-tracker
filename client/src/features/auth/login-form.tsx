@@ -1,13 +1,15 @@
 "use client";
 
 import z from "zod";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth-client";
 import { Link } from "@/components/ui/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
@@ -16,10 +18,27 @@ const schema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
+function getLoginErrorMessage(status: number) {
+  if (status === 429) {
+    return "Too many login attempts. Please wait and try again.";
+  }
+
+  if (status >= 500) {
+    return "We couldn't log you in. Please try again.";
+  }
+
+  return "Invalid email or password.";
+}
+
 function LoginForm() {
   const router = useRouter();
+  const [authError, setAuthError] = useState<string | null>(null);
 
-  const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       email: "",
@@ -28,20 +47,19 @@ function LoginForm() {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    await authClient.signIn.email(
-      {
-        email: data.email,
-        password: data.password,
-      },
-      {
-        onSuccess: () => {
-          router.replace("/dashboard");
-        },
-        onError: () => {
-          console.error("Login Error");
-        },
-      },
-    );
+    setAuthError(null);
+
+    const { error } = await auth.signIn.email({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (error) {
+      setAuthError(getLoginErrorMessage(error.status));
+      return;
+    }
+
+    router.replace("/dashboard");
   });
 
   return (
@@ -86,6 +104,7 @@ function LoginForm() {
             dirty={isDirty}
             invalid={invalid}
             touched={isTouched}
+            className="relative"
           >
             <FieldLabel>Password</FieldLabel>
             <PasswordInput
@@ -95,15 +114,26 @@ function LoginForm() {
               onValueChange={onChange}
             />
             <FieldError match={invalid}>{error?.message}</FieldError>
+            <Link
+              href="/forgot-password"
+              className="absolute top-0 right-0 text-sm"
+            >
+              Forgot password?
+            </Link>
           </Field>
         )}
       />
 
-      <div className="flex justify-end text-sm">
-        <Link href="/forgot-password">Forgot password?</Link>
-      </div>
+      {authError && (
+        <p role="alert" className="text-danger text-sm">
+          {authError}
+        </p>
+      )}
 
-      <Button type="submit">Log In</Button>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting && <Spinner />}
+        Log In
+      </Button>
     </form>
   );
 }

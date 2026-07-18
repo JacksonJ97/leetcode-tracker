@@ -11,7 +11,7 @@ function Header() {
         </div>
 
         <div className="flex gap-4">
-          <Link href="/login">Sign In</Link>
+          <Link href="/login">Log In</Link>
           <Link href="/signup">Get Started</Link>
         </div>
       </nav>
