@@ -1,5 +1,5 @@
 import { Field as FieldPrimitive } from "@base-ui/react/field";
-import { cn } from "@/utils/classnames";
+import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 
 function Field({ className, ...props }: FieldPrimitive.Root.Props) {
