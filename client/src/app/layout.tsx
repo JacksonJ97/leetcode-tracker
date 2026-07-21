@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const geist = Geist({
@@ -27,6 +28,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-screen flex-col">
         <div className="isolate">{children}</div>
+        <Toaster />
       </body>
     </html>
   );

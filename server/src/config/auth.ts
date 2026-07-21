@@ -14,13 +14,21 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: false,
+  },
+  account: {
+    accountLinking: {
+      enabled: false,
+    },
   },
   socialProviders: {
     github: {
+      prompt: "select_account",
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     },
     google: {
+      prompt: "select_account",
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
