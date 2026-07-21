@@ -224,7 +224,7 @@ function SignupForm() {
         </p>
       )}
 
-      <Button type="submit" disabled={isSubmitting}>
+      <Button type="submit" disabled={isSubmitting} className="mt-1">
         {isSubmitting && <Spinner />}
         Get Started
       </Button>
