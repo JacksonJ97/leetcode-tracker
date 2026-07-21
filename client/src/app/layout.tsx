@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LeetCode Tracker",
-  description: "Track your LeetCode progress",
+  title: "Leetcode Tracker",
+  description: "Track your Leetcode progress",
 };
 
 export default function RootLayout({
