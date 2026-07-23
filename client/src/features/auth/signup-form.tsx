@@ -1,107 +1,22 @@
 "use client";
 
 import z from "zod";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckIcon, CircleIcon } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
 import { auth } from "@/lib/auth-client";
+import { storePendingEmailVerification } from "@/lib/pending-email-verification";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { PasswordInput } from "@/components/ui/password-input";
-import {
-  Field,
-  FieldLabel,
-  FieldItem,
-  FieldError,
-} from "@/components/ui/field";
-
-const passwordRequirements = [
-  {
-    label: "At least 8 characters",
-    test: (value: string) => value.length >= 8,
-  },
-  {
-    label: "At least one number",
-    test: (value: string) => /[0-9]/.test(value),
-  },
-  {
-    label: "At least one lowercase letter",
-    test: (value: string) => /[a-z]/.test(value),
-  },
-  {
-    label: "At least one uppercase letter",
-    test: (value: string) => /[A-Z]/.test(value),
-  },
-  {
-    label: "At least one special character",
-    test: (value: string) => /[^A-Za-z0-9]/.test(value),
-  },
-];
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 const schema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "This field is required")
-    .max(100, "Name must be under 100 characters"),
-  email: z.email().max(254, "Email must be under 254 characters"),
-  password: z
-    .string()
-    .max(72, "Password must be under 72 characters")
-    .refine((value) => passwordRequirements.every(({ test }) => test(value)), {
-      error: "Password does not meet the requirements",
-    }),
+  email: z.email().trim().toLowerCase(),
 });
-
-function getSignupErrorMessage(error: { code?: string; status: number }) {
-  if (error.status === 429) {
-    return "Too many signup attempts. Please wait and try again.";
-  }
-
-  switch (error.code) {
-    case "USER_ALREADY_EXISTS":
-    case "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL":
-      return "An account with this email already exists.";
-  }
-
-  if (error.status >= 500) {
-    return "We couldn't create your account. Please try again.";
-  }
-
-  return "We couldn't create your account. Check your details and try again.";
-}
-
-function PasswordRequirements({ password }: { password: string }) {
-  return (
-    <ul className="flex flex-col gap-1">
-      {passwordRequirements.map(({ label, test }) => {
-        const isMet = test(password);
-        const Icon = isMet ? CheckIcon : CircleIcon;
-
-        return (
-          <li
-            key={label}
-            className={cn(
-              "flex items-center gap-2 text-sm",
-              isMet ? "text-success" : "text-foreground-muted",
-            )}
-          >
-            <Icon aria-hidden="true" className="size-4 shrink-0" />
-            <span>{label}</span>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
 
 function SignupForm() {
   const router = useRouter();
-  const [signupError, setSignupError] = useState<string | null>(null);
 
   const {
     control,
@@ -110,58 +25,26 @@ function SignupForm() {
   } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: "",
       email: "",
-      password: "",
     },
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    setSignupError(null);
-
-    const { error } = await auth.signUp.email({
-      name: data.name,
+    const { error } = await auth.emailOtp.sendVerificationOtp({
+      type: "sign-in",
       email: data.email,
-      password: data.password,
     });
 
-    if (error) {
-      setSignupError(getSignupErrorMessage(error));
-      return;
-    }
+    // TODO: Handle Errors
+    if (error) return;
 
-    router.replace("/dashboard");
+    storePendingEmailVerification({ email: data.email, returnTo: "/signup" });
+
+    router.push("/verify-email");
   });
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      <Controller
-        name="name"
-        control={control}
-        render={({
-          field: { ref, name, value, onBlur, onChange },
-          fieldState: { error, invalid, isDirty, isTouched },
-        }) => (
-          <Field
-            name={name}
-            dirty={isDirty}
-            invalid={invalid}
-            touched={isTouched}
-          >
-            <FieldLabel>Name</FieldLabel>
-            <Input
-              autoComplete="name"
-              placeholder="Jane Doe"
-              ref={ref}
-              value={value}
-              onBlur={onBlur}
-              onValueChange={onChange}
-            />
-            <FieldError match={invalid}>{error?.message}</FieldError>
-          </Field>
-        )}
-      />
-
       <Controller
         name="email"
         control={control}
@@ -190,43 +73,9 @@ function SignupForm() {
         )}
       />
 
-      <Controller
-        name="password"
-        control={control}
-        render={({
-          field: { ref, name, value, onBlur, onChange },
-          fieldState: { error, invalid, isDirty, isTouched },
-        }) => (
-          <Field
-            name={name}
-            dirty={isDirty}
-            invalid={invalid}
-            touched={isTouched}
-          >
-            <FieldLabel>Password</FieldLabel>
-            <PasswordInput
-              ref={ref}
-              value={value}
-              onBlur={onBlur}
-              onValueChange={onChange}
-            />
-            <FieldItem className="mt-2 hidden data-focused:block data-touched:block">
-              <PasswordRequirements password={value} />
-            </FieldItem>
-            <FieldError match={invalid}>{error?.message}</FieldError>
-          </Field>
-        )}
-      />
-
-      {signupError && (
-        <p role="alert" className="text-danger text-sm">
-          {signupError}
-        </p>
-      )}
-
-      <Button type="submit" disabled={isSubmitting} className="mt-1">
+      <Button type="submit" disabled={isSubmitting}>
         {isSubmitting && <Spinner />}
-        Get Started
+        Continue with Email
       </Button>
     </form>
   );
