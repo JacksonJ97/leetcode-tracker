@@ -1,20 +1,15 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
-import {
-  getPendingEmailVerification,
-  clearPendingEmailVerification,
-} from "@/lib/pending-email-verification";
-import { useIsClient } from "@/hooks/use-is-client";
+import { auth } from "@/lib/auth-client";
 import { Link } from "@/components/ui/link";
 import { OTPField, OTPFieldInput } from "@/components/ui/otp-field";
 import { Field, FieldLabel, FieldDescription } from "@/components/ui/field";
-import { auth } from "@/lib/auth-client";
 
-function VerifyEmailForm() {
-  const isClient = useIsClient();
-  const verification = isClient ? getPendingEmailVerification() : null;
+function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
+  const router = useRouter();
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -24,12 +19,14 @@ function VerifyEmailForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     const { error } = await auth.signIn.emailOtp({
-      email: verification?.email,
+      email,
       otp: data.code,
     });
 
     // TODO: Handle Errors
     if (error) return;
+
+    router.replace("/dashboard");
   });
 
   return (
@@ -42,12 +39,7 @@ function VerifyEmailForm() {
             <FieldLabel className="sr-only">Verification code</FieldLabel>
             <FieldDescription className="text-center">
               Enter the code we sent to{" "}
-              {verification ? (
-                <span className="text-foreground">{verification.email}</span>
-              ) : (
-                "your email"
-              )}
-              .
+              <span className="text-foreground">{email}</span>.
             </FieldDescription>
             <OTPField
               autoSubmit
@@ -69,8 +61,7 @@ function VerifyEmailForm() {
       />
 
       <Link
-        href={verification ? verification.returnTo : "/login"}
-        onClick={clearPendingEmailVerification}
+        href={`/${origin}`}
         className="text-foreground-muted hover:text-foreground"
       >
         <ArrowLeft aria-hidden="true" />

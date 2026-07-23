@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { auth } from "@/lib/auth-client";
-import { storePendingEmailVerification } from "@/lib/pending-email-verification";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -38,9 +37,7 @@ function SignupForm() {
     // TODO: Handle Errors
     if (error) return;
 
-    storePendingEmailVerification({ email: data.email, returnTo: "/signup" });
-
-    router.push("/verify-email");
+    router.push(`/verify-email?origin=signup&email=${data.email}`);
   });
 
   return (
