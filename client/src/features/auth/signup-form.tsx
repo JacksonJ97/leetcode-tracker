@@ -37,7 +37,9 @@ function SignupForm() {
     // TODO: Handle Errors
     if (error) return;
 
-    router.push(`/verify-email?origin=signup&email=${data.email}`);
+    router.push(
+      `/verify-email?origin=signup&email=${encodeURIComponent(data.email)}`,
+    );
   });
 
   return (

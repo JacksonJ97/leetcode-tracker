@@ -37,7 +37,9 @@ function LoginForm() {
     // TODO: Handle Errors
     if (error) return;
 
-    router.push(`/verify-email?origin=login&email=${data.email}`);
+    router.push(
+      `/verify-email?origin=login&email=${encodeURIComponent(data.email)}`,
+    );
   });
 
   return (
