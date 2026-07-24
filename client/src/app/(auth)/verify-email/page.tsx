@@ -8,8 +8,8 @@ export default async function VerifyEmailPage({ searchParams }: PageProps) {
   const { email, origin } = await searchParams;
 
   return (
-    <div className="flex w-full max-w-md flex-col gap-6">
-      <h1 className="text-center text-3xl font-semibold tracking-tight">
+    <div className="w-full max-w-md">
+      <h1 className="mb-6 text-center text-3xl font-semibold">
         Check your email
       </h1>
       <VerifyEmailForm email={email} origin={origin} />

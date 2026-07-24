@@ -4,10 +4,14 @@ import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
-import { EMAIL_OTP_ERROR_CODES } from "better-auth/client/plugins";
 import { auth } from "@/lib/auth-client";
 import { Link } from "@/components/ui/link";
 import { OTPField, OTPFieldInput } from "@/components/ui/otp-field";
+import {
+  getVerifyOTPErrorMessage,
+  TOO_MANY_REQUESTS_MESSAGE,
+  VERIFY_EMAIL_ERROR_MESSAGE,
+} from "@/features/auth/auth-errors";
 import {
   Field,
   FieldLabel,
@@ -16,17 +20,6 @@ import {
 } from "@/components/ui/field";
 
 const OTP_LENGTH = 6;
-
-const OTP_ERROR_MESSAGES: Record<string, string> = {
-  [EMAIL_OTP_ERROR_CODES.INVALID_OTP.code]:
-    "That verification code is incorrect. Try again.",
-
-  [EMAIL_OTP_ERROR_CODES.OTP_EXPIRED.code]:
-    "That verification code has expired. Go back to request a new code.",
-
-  [EMAIL_OTP_ERROR_CODES.TOO_MANY_ATTEMPTS.code]:
-    "Too many incorrect attempts. Go back to request a new code.",
-};
 
 function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
   const router = useRouter();
@@ -49,14 +42,14 @@ function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
     });
 
     if (error) {
-      const message = OTP_ERROR_MESSAGES[error.code ?? ""];
+      const message = getVerifyOTPErrorMessage(error.code);
 
       if (message) {
         setError("code", { type: "server", message });
       } else if (error.status === 429) {
-        toast.error("Too many requests. Wait a moment and try again.");
+        toast.error(TOO_MANY_REQUESTS_MESSAGE);
       } else {
-        toast.error("We couldn't verify your code. Please try again.");
+        toast.error(VERIFY_EMAIL_ERROR_MESSAGE);
       }
 
       return;

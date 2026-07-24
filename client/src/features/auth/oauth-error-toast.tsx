@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { toast } from "@/components/ui/sonner";
-import { getOAuthErrorMessage } from "@/features/auth/oauth-errors";
+import { getOAuthErrorMessage } from "@/features/auth/auth-errors";
 
 function OAuthErrorToast() {
   const router = useRouter();

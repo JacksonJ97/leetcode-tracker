@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { GitHub } from "@/components/icons/github-icon";
 import { Google } from "@/components/icons/google-icon";
-import { getOAuthErrorMessage } from "@/features/auth/oauth-errors";
+import { getOAuthErrorMessage } from "@/features/auth/auth-errors";
 
 function GithubSSO({
   origin,

@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { getSendVerificationOtpErrorMessage } from "@/features/auth/email-otp-errors";
+import { getSendOTPErrorMessage } from "@/features/auth/auth-errors";
 
 const schema = z.object({
   email: z.email().trim().toLowerCase(),
@@ -37,7 +37,8 @@ function LoginForm() {
     });
 
     if (error) {
-      toast.error(getSendVerificationOtpErrorMessage(error.status));
+      const message = getSendOTPErrorMessage(error.status);
+      toast.error(message);
       return;
     }
 
