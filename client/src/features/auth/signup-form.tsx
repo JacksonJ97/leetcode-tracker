@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { auth } from "@/lib/auth-client";
+import { toast } from "@/components/ui/sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import { getSendVerificationOtpErrorMessage } from "@/features/auth/email-otp-errors";
 
 const schema = z.object({
   email: z.email().trim().toLowerCase(),
@@ -34,8 +36,10 @@ function SignupForm() {
       email: data.email,
     });
 
-    // TODO: Handle Errors
-    if (error) return;
+    if (error) {
+      toast.error(getSendVerificationOtpErrorMessage(error.status));
+      return;
+    }
 
     router.push(
       `/verify-email?origin=signup&email=${encodeURIComponent(data.email)}`,
