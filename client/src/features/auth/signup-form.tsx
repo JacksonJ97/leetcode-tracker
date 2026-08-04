@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { auth } from "@/lib/auth-client";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@/components/ui/toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -38,7 +38,7 @@ function SignupForm() {
 
     if (error) {
       const message = getSendOTPErrorMessage(error.status);
-      toast.error(message);
+      toast.add({ type: "error", description: message });
       return;
     }
 

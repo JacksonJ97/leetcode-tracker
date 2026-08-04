@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@/components/ui/toast";
 import { getOAuthErrorMessage } from "@/features/auth/auth-errors";
 
 function OAuthErrorToast() {
@@ -14,7 +14,8 @@ function OAuthErrorToast() {
   useEffect(() => {
     if (!error) return;
 
-    toast.error(getOAuthErrorMessage(error), { id: "oauth-error" });
+    const message = getOAuthErrorMessage(error);
+    toast.add({ id: "oauth-error", type: "error", description: message });
 
     const nextSearchParams = new URLSearchParams(searchParams);
     nextSearchParams.delete("error");

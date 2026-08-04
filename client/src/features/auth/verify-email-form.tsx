@@ -1,11 +1,11 @@
 "use client";
 
-import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { auth } from "@/lib/auth-client";
 import { Link } from "@/components/ui/link";
+import { toast } from "@/components/ui/toast";
 import { OTPField, OTPFieldInput } from "@/components/ui/otp-field";
 import {
   getVerifyOTPErrorMessage,
@@ -47,9 +47,9 @@ function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
       if (message) {
         setError("code", { type: "server", message });
       } else if (error.status === 429) {
-        toast.error(TOO_MANY_REQUESTS_MESSAGE);
+        toast.add({ type: "error", description: TOO_MANY_REQUESTS_MESSAGE });
       } else {
-        toast.error(VERIFY_EMAIL_ERROR_MESSAGE);
+        toast.add({ type: "error", description: VERIFY_EMAIL_ERROR_MESSAGE });
       }
 
       return;

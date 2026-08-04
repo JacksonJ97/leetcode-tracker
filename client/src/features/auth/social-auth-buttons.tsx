@@ -2,7 +2,7 @@
 
 import { env } from "@/lib/env";
 import { auth } from "@/lib/auth-client";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { GitHub } from "@/components/icons/github-icon";
 import { Google } from "@/components/icons/google-icon";
@@ -21,7 +21,7 @@ function GithubSSO({
 
     if (error) {
       const message = getOAuthErrorMessage(error.code);
-      toast.error(message);
+      toast.add({ type: "error", description: message });
     }
   };
 
@@ -46,7 +46,7 @@ function GoogleSSO({
 
     if (error) {
       const message = getOAuthErrorMessage(error.code);
-      toast.error(message);
+      toast.add({ type: "error", description: message });
     }
   };
 

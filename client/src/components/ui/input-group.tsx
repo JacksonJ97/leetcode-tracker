@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+// Current not being used (delete in future if not used after MVP)
+
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

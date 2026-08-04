@@ -109,6 +109,12 @@
   --success: var(--emerald-500);
   --info: var(--blue-500);
 
+  /* Semantic surfaces */
+  --danger-surface: var(--red-950);
+  --warning-surface: var(--amber-950);
+  --success-surface: var(--emerald-950);
+  --info-surface: var(--blue-950);
+
   /* Focus */
   --focus-ring: oklch(100% 0 0);
 }
@@ -152,6 +158,12 @@
   --color-warning: var(--warning);
   --color-success: var(--success);
   --color-info: var(--info);
+
+  /* Semantic surfaces */
+  --color-danger-surface: var(--danger-surface);
+  --color-warning-surface: var(--warning-surface);
+  --color-success-surface: var(--success-surface);
+  --color-info-surface: var(--info-surface);
 
   /* Focus */
   --color-focus-ring: var(--focus-ring);
