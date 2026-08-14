@@ -42,9 +42,8 @@ function LoginForm() {
       return;
     }
 
-    router.push(
-      `/verify-email?origin=login&email=${encodeURIComponent(data.email)}`,
-    );
+    const email = encodeURIComponent(data.email);
+    router.push(`/verify-email?origin=login&email=${email}`);
   });
 
   return (

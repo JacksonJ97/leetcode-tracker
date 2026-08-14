@@ -8,20 +8,17 @@ import { GitHub } from "@/components/icons/github-icon";
 import { Google } from "@/components/icons/google-icon";
 import { getOAuthErrorMessage } from "@/features/auth/auth-errors";
 
-function GithubSSO({
-  origin,
-  ...props
-}: React.ComponentProps<typeof Button> & { origin: "login" | "signup" }) {
+function GithubSSO({ ...props }: React.ComponentProps<typeof Button>) {
   const handleClick = async () => {
     const { error } = await auth.signIn.social({
       provider: "github",
       callbackURL: `${env.NEXT_PUBLIC_CLIENT_ORIGIN}/dashboard`,
-      errorCallbackURL: `${env.NEXT_PUBLIC_CLIENT_ORIGIN}/${origin}`,
     });
 
     if (error) {
       const message = getOAuthErrorMessage(error.code);
       toast.add({ type: "error", description: message });
+      return;
     }
   };
 
@@ -33,15 +30,11 @@ function GithubSSO({
   );
 }
 
-function GoogleSSO({
-  origin,
-  ...props
-}: React.ComponentProps<typeof Button> & { origin: "login" | "signup" }) {
+function GoogleSSO({ ...props }: React.ComponentProps<typeof Button>) {
   const handleClick = async () => {
     const { error } = await auth.signIn.social({
       provider: "google",
       callbackURL: `${env.NEXT_PUBLIC_CLIENT_ORIGIN}/dashboard`,
-      errorCallbackURL: `${env.NEXT_PUBLIC_CLIENT_ORIGIN}/${origin}`,
     });
 
     if (error) {

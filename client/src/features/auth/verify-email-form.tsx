@@ -6,18 +6,18 @@ import { useForm, Controller } from "react-hook-form";
 import { auth } from "@/lib/auth-client";
 import { Link } from "@/components/ui/link";
 import { toast } from "@/components/ui/toast";
-import { OTPField, OTPFieldInput } from "@/components/ui/otp-field";
-import {
-  getVerifyOTPErrorMessage,
-  TOO_MANY_REQUESTS_MESSAGE,
-  VERIFY_EMAIL_ERROR_MESSAGE,
-} from "@/features/auth/auth-errors";
 import {
   Field,
   FieldLabel,
   FieldDescription,
   FieldError,
 } from "@/components/ui/field";
+import { OTPField, OTPFieldInput } from "@/components/ui/otp-field";
+import {
+  getVerifyOTPErrorMessage,
+  TOO_MANY_REQUESTS_MESSAGE,
+  VERIFY_EMAIL_ERROR_MESSAGE,
+} from "@/features/auth/auth-errors";
 
 const OTP_LENGTH = 6;
 
@@ -56,7 +56,6 @@ function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
     }
 
     router.replace("/dashboard");
-    router.refresh();
   });
 
   return (
