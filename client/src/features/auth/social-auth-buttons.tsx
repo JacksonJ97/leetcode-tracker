@@ -18,7 +18,6 @@ function GithubSSO({ ...props }: React.ComponentProps<typeof Button>) {
     if (error) {
       const message = getOAuthErrorMessage(error.code);
       toast.add({ type: "error", description: message });
-      return;
     }
   };
 
