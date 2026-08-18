@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth-client";
 import { SignOutButton } from "@/features/dashboard/signout-button";
 
 function Sidebar() {
@@ -31,9 +34,19 @@ function Sidebar() {
   );
 }
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const { data: session } = await auth.getSession({
+    fetchOptions: {
+      headers: await headers(),
+    },
+  });
+
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
     <div className="flex min-h-screen">
       <Sidebar />

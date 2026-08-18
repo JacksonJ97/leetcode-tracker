@@ -56,6 +56,7 @@ function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
     }
 
     router.replace("/dashboard");
+    router.refresh();
   });
 
   return (

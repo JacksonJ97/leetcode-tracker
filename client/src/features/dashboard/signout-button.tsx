@@ -12,7 +12,8 @@ function SignOutButton() {
     await auth.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/login");
+          router.replace("/login");
+          router.refresh();
         },
         onError: () => {
           console.error("Log out error");
