@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/toast";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 const geist = Geist({
@@ -27,7 +28,9 @@ export default function RootLayout({
       className={`${geist.variable} ${geistMono.variable} antialiased`}
     >
       <body className="flex min-h-screen flex-col">
-        <div className="isolate">{children}</div>
+        <div className="isolate">
+          <TooltipProvider>{children}</TooltipProvider>
+        </div>
         <Toaster />
       </body>
     </html>
