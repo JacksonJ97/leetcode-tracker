@@ -1,4 +1,12 @@
 import Link from "next/link";
+import {
+  Home,
+  CalendarDays,
+  BookOpenText,
+  NotebookTabs,
+  ChartNoAxesCombined,
+  ChartNoAxesColumnIncreasing,
+} from "lucide-react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth-client";
@@ -10,39 +18,63 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
+const links = [
+  {
+    title: "Home",
+    url: "/dashboard",
+    icon: Home,
+  },
+  {
+    title: "Tracker",
+    url: "/dashboard/tracker",
+    icon: ChartNoAxesColumnIncreasing,
+  },
+  {
+    title: "Calendar",
+    url: "/dashboard/calendar",
+    icon: CalendarDays,
+  },
+  {
+    title: "Analytics",
+    url: "/dashboard/analytics",
+    icon: ChartNoAxesCombined,
+  },
+  {
+    title: "Guide",
+    url: "/dashboard/guide",
+    icon: BookOpenText,
+  },
+  {
+    title: "Cheatsheet",
+    url: "/dashboard/cheatsheet",
+    icon: NotebookTabs,
+  },
+];
+
 function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarTrigger />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <Link href="/dashboard">Home</Link>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <Link href="/dashboard/tracker">Tracker</Link>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <Link href="/dashboard/calendar">Calendar</Link>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <Link href="/dashboard/analytics">Analytics</Link>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <Link href="/dashboard/cheatsheet">Cheatsheet</Link>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <Link href="/dashboard/guide">Guide</Link>
-            </SidebarMenuItem>
+            {links.map((link) => (
+              <SidebarMenuItem key={link.title}>
+                <SidebarMenuButton tooltip={link.title}>
+                  {link.icon && <link.icon />}
+                  <Link href={link.url}>{link.title}</Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
@@ -68,11 +100,11 @@ export default async function Layout({
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-svh">
       <SidebarProvider>
         <AppSidebar />
-        <main className="flex-1 p-4">{children}</main>
       </SidebarProvider>
+      <main className="flex-1 p-4">{children}</main>
     </div>
   );
 }
