@@ -22,7 +22,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import NavUser from "@/features/dashboard/nav-user";
+import NavUser from "@/components/dashboard/nav-user";
 
 const links = [
   {
