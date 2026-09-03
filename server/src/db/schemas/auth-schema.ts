@@ -10,6 +10,8 @@ import {
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
@@ -19,6 +21,7 @@ export const user = pgTable("user", {
     .defaultNow()
     .$onUpdate(() => new Date())
     .notNull(),
+  onboardingCompletedAt: timestamp("onboarding_completed_at"),
 });
 
 export const session = pgTable(

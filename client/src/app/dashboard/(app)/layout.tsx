@@ -17,6 +17,10 @@ export default async function Layout({
     redirect("/login");
   }
 
+  if (!session.user.onboardingCompletedAt) {
+    redirect("/dashboard/onboarding");
+  }
+
   const user = {
     name: session.user.name,
     email: session.user.email,

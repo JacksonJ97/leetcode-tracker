@@ -27,7 +27,7 @@ export default function RootLayout({
       lang="en"
       className={`${geist.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-svh flex-col">
         <div className="isolate">
           <TooltipProvider>{children}</TooltipProvider>
         </div>

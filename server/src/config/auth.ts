@@ -14,6 +14,37 @@ export const auth = betterAuth({
     schema,
     provider: "pg",
   }),
+  user: {
+    additionalFields: {
+      firstName: {
+        type: "string",
+        input: false,
+        required: false,
+      },
+      lastName: {
+        type: "string",
+        input: false,
+        required: false,
+      },
+      onboardingCompletedAt: {
+        type: "date",
+        input: false,
+        required: false,
+      },
+    },
+  },
+  socialProviders: {
+    github: {
+      prompt: "select_account",
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    },
+    google: {
+      prompt: "select_account",
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    },
+  },
   plugins: [
     emailOTP({
       async sendVerificationOTP({ otp, type, email }) {
@@ -90,16 +121,4 @@ export const auth = betterAuth({
       },
     }),
   ],
-  socialProviders: {
-    github: {
-      prompt: "select_account",
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    },
-    google: {
-      prompt: "select_account",
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    },
-  },
 });
