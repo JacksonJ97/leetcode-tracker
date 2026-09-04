@@ -18,7 +18,7 @@ function OnboardingForm({ image }: { image: string }) {
   const {
     control,
     handleSubmit,
-    formState: { isValid, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -34,8 +34,8 @@ function OnboardingForm({ image }: { image: string }) {
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <AvatarUpload
-        className="mb-2"
-        defaultAvatar={image}
+        className="mb-3"
+        defaultImageUrl={image}
         onFileChange={(file) => {
           console.log("file", file);
         }}
@@ -56,8 +56,8 @@ function OnboardingForm({ image }: { image: string }) {
           >
             <FieldLabel>First name</FieldLabel>
             <Input
-              autoComplete="given-name"
               placeholder="Ada"
+              autoComplete="given-name"
               ref={ref}
               value={value}
               onBlur={onBlur}
@@ -83,8 +83,8 @@ function OnboardingForm({ image }: { image: string }) {
           >
             <FieldLabel>Last name</FieldLabel>
             <Input
-              autoComplete="family-name"
               placeholder="Lovelace"
+              autoComplete="family-name"
               ref={ref}
               value={value}
               onBlur={onBlur}
@@ -95,11 +95,7 @@ function OnboardingForm({ image }: { image: string }) {
         )}
       />
 
-      <Button
-        type="submit"
-        className="mt-3"
-        disabled={!isValid || isSubmitting}
-      >
+      <Button type="submit" className="mt-3" disabled={isSubmitting}>
         {isSubmitting && <Spinner />}
         Continue
       </Button>

@@ -65,7 +65,7 @@ function LoginForm() {
             <Input
               type="email"
               autoComplete="email"
-              placeholder="you@example.com"
+              placeholder="ada@lovelace.com"
               ref={ref}
               value={value}
               onBlur={onBlur}
