@@ -46,6 +46,11 @@ export const auth = betterAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
   },
+  advanced: {
+    ipAddress: {
+      ipAddressHeaders: ["x-real-ip"],
+    },
+  },
   plugins: [
     customSession(async ({ user, session }) => {
       // Uploaded images store a bucket key; OAuth images have an HTTPS URL.
