@@ -26,6 +26,10 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "resolveFullExtension": ".js"
+  },
   "include": ["src/**/*.ts", "src/**/*.tsx", "drizzle.config.ts"],
   "exclude": ["node_modules", "dist"]
 }
