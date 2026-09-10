@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/toast";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
@@ -32,6 +34,8 @@ export default function RootLayout({
           <TooltipProvider>{children}</TooltipProvider>
         </div>
         <Toaster />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
