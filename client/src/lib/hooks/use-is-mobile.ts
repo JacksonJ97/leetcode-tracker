@@ -13,10 +13,7 @@ export function useIsMobile(mobileBreakpoint = 768) {
     [query],
   );
 
-  const getSnapshot = useCallback(
-    () => window.matchMedia(query).matches,
-    [query],
-  );
+  const getSnapshot = useCallback(() => window.matchMedia(query).matches, [query]);
   const getServerSnapshot = useCallback(() => false, []);
 
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

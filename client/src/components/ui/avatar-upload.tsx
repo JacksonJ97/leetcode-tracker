@@ -3,14 +3,9 @@
 import { XIcon, UserIcon, PlusIcon, CircleAlertIcon } from "lucide-react";
 import { cn, formatBytes } from "@/lib/utils";
 import type { AvatarUploadController } from "@/lib/hooks/use-avatar-upload";
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  AvatarBadge,
-} from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Avatar, AvatarImage, AvatarFallback, AvatarBadge } from "@/components/ui/avatar";
 
 interface AvatarUploadProps {
   upload: AvatarUploadController;
@@ -18,11 +13,7 @@ interface AvatarUploadProps {
   defaultImageUrl?: string;
 }
 
-export function AvatarUpload({
-  upload,
-  className,
-  defaultImageUrl,
-}: AvatarUploadProps) {
+export function AvatarUpload({ upload, className, defaultImageUrl }: AvatarUploadProps) {
   const {
     file: currentFile,
     error,
@@ -44,10 +35,8 @@ export function AvatarUpload({
           <Avatar
             {...triggerProps}
             size="xl"
-            className="focus-visible:outline-focus-ring cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 aria-disabled:cursor-default aria-disabled:opacity-50"
-            aria-label={
-              previewUrl ? "Change profile photo" : "Select profile photo"
-            }
+            className="cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring aria-disabled:cursor-default aria-disabled:opacity-50"
+            aria-label={previewUrl ? "Change profile photo" : "Select profile photo"}
           >
             <input tabIndex={-1} className="sr-only" {...inputProps} />
 
@@ -57,9 +46,8 @@ export function AvatarUpload({
               <>
                 <AvatarFallback
                   className={cn(
-                    "text-foreground-muted border border-dashed border-(--gray-600) transition-colors",
-                    !isDisabled &&
-                      "hover:border-(--gray-400) hover:bg-(--gray-800)",
+                    "border border-dashed border-(--gray-600) text-foreground-muted transition-colors",
+                    !isDisabled && "hover:border-(--gray-400) hover:bg-(--gray-800)",
                     isDragging && "border-(--gray-400) bg-(--gray-800)",
                   )}
                 >
@@ -79,7 +67,7 @@ export function AvatarUpload({
               disabled={isDisabled}
               aria-label="Remove avatar"
               onClick={removeFile}
-              className="ring-background absolute top-0.5 right-0.5 z-10 size-5 rounded-full border-transparent bg-(--gray-800) ring-2 hover:bg-(--gray-700)"
+              className="absolute top-0.5 right-0.5 z-10 size-5 rounded-full border-transparent bg-(--gray-800) ring-2 ring-background hover:bg-(--gray-700)"
             >
               <XIcon className="size-3.5" />
             </Button>
@@ -88,10 +76,9 @@ export function AvatarUpload({
 
         <div className="space-y-1">
           <p className="text-sm font-medium">
-            Profile photo{" "}
-            <span className="text-foreground-muted">(Optional)</span>
+            Profile photo <span className="text-foreground-muted">(Optional)</span>
           </p>
-          <p className="text-foreground-muted text-xs">
+          <p className="text-xs text-foreground-muted">
             JPG, PNG, or WEBP — up to {formatBytes(maxSize)}
           </p>
         </div>

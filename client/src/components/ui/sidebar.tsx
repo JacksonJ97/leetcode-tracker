@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useMemo,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  createContext,
-} from "react";
+import { useMemo, useState, useEffect, useContext, useCallback, createContext } from "react";
 import { PanelLeftIcon } from "lucide-react";
 import { useRender } from "@base-ui/react/use-render";
 import { mergeProps } from "@base-ui/react/merge-props";
@@ -21,11 +14,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 const SIDEBAR_WIDTH = "16.25rem";
 const SIDEBAR_WIDTH_MOBILE = "16.25rem";
@@ -93,10 +82,7 @@ function SidebarProvider({
   // Adds a keyboard shortcut to toggle the sidebar.
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-        (event.metaKey || event.ctrlKey)
-      ) {
+      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
         toggleSidebar();
       }
@@ -162,7 +148,7 @@ function Sidebar({
         data-slot="sidebar"
         style={style}
         className={cn(
-          "bg-background text-foreground flex h-full w-(--sidebar-width) flex-col",
+          "flex h-full w-(--sidebar-width) flex-col bg-background text-foreground",
           className,
         )}
         {...props}
@@ -181,10 +167,7 @@ function Sidebar({
           data-mobile="true"
           data-sidebar="sidebar"
           showCloseButton={false}
-          className={cn(
-            "p-0 data-[side=left]:w-(--sidebar-width-mobile)",
-            className,
-          )}
+          className={cn("p-0 data-[side=left]:w-(--sidebar-width-mobile)", className)}
           style={
             {
               "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
@@ -230,7 +213,7 @@ function Sidebar({
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "border-border border-r group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
+            : "border-r border-border group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
           className,
         )}
         {...props}
@@ -238,7 +221,7 @@ function Sidebar({
         <div
           data-slot="sidebar-inner"
           data-sidebar="sidebar"
-          className="bg-background group-data-[variant=floating]:ring-border flex size-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:ring-1"
+          className="flex size-full flex-col bg-background group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-border"
         >
           {children}
         </div>
@@ -247,10 +230,7 @@ function Sidebar({
   );
 }
 
-function SidebarTrigger({
-  onClick,
-  ...props
-}: React.ComponentProps<typeof Button>) {
+function SidebarTrigger({ onClick, ...props }: React.ComponentProps<typeof Button>) {
   const { isMobile, open, openMobile, toggleSidebar } = useSidebar();
 
   return (
@@ -331,9 +311,7 @@ function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
 }
 
 function SidebarMenuItem({ ...props }: React.ComponentProps<"li">) {
-  return (
-    <li data-slot="sidebar-menu-item" data-sidebar="menu-item" {...props} />
-  );
+  return <li data-slot="sidebar-menu-item" data-sidebar="menu-item" {...props} />;
 }
 
 function SidebarMenuButton({
@@ -354,10 +332,10 @@ function SidebarMenuButton({
     props: mergeProps<"button">(
       {
         className: cn(
-          "text-foreground hover:bg-surface active:bg-surface-interactive flex h-9 w-full cursor-pointer items-center gap-2 overflow-hidden rounded-md p-2 text-sm leading-none font-medium transition-[background-color,width,height] duration-100 select-none [&>span:last-child]:truncate",
+          "flex h-9 w-full cursor-pointer items-center gap-2 overflow-hidden rounded-md p-2 text-sm leading-none font-medium text-foreground transition-[background-color,width,height] duration-100 select-none hover:bg-surface active:bg-surface-interactive [&>span:last-child]:truncate",
           "data-active:bg-surface-interactive",
           "group-data-[collapsible=icon]:size-9",
-          "focus-visible:outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-1",
+          "focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring",
           "disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
           "[&_svg]:size-5 [&_svg]:shrink-0",
           className,

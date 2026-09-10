@@ -6,13 +6,8 @@ import { useForm, Controller } from "react-hook-form";
 import { auth } from "@/lib/auth-client";
 import { Link } from "@/components/ui/link";
 import { toast } from "@/components/ui/toast";
-import {
-  Field,
-  FieldLabel,
-  FieldDescription,
-  FieldError,
-} from "@/components/ui/field";
 import { OTPField, OTPFieldInput } from "@/components/ui/otp-field";
+import { Field, FieldLabel, FieldDescription, FieldError } from "@/components/ui/field";
 import {
   getVerifyOTPErrorMessage,
   TOO_MANY_REQUESTS_MESSAGE,
@@ -72,8 +67,7 @@ function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
             <FieldLabel className="sr-only">Verification code</FieldLabel>
 
             <FieldDescription className="text-center">
-              Enter the code we sent to{" "}
-              <span className="text-foreground">{email}</span>.
+              Enter the code we sent to <span className="text-foreground">{email}</span>.
             </FieldDescription>
 
             <OTPField
@@ -86,27 +80,18 @@ function VerifyEmailForm({ email, origin }: { email: string; origin: string }) {
               onValueChange={onChange}
             >
               {Array.from({ length: OTP_LENGTH }, (_, index) => (
-                <OTPFieldInput
-                  autoFocus={index === 0}
-                  aria-label={`Character ${index + 1} of ${OTP_LENGTH}`}
-                  key={index}
-                />
+                <OTPFieldInput aria-label={`Character ${index + 1} of ${OTP_LENGTH}`} key={index} />
               ))}
             </OTPField>
 
             <FieldError match={invalid}>{error?.message}</FieldError>
 
-            <p role="status" className="sr-only">
-              {isSubmitting ? "Verifying code…" : ""}
-            </p>
+            <output className="sr-only">{isSubmitting ? "Verifying code…" : ""}</output>
           </Field>
         )}
       />
 
-      <Link
-        href={`/${origin}`}
-        className="text-foreground-muted hover:text-foreground"
-      >
+      <Link href={`/${origin}`} className="text-foreground-muted hover:text-foreground">
         <ArrowLeft aria-hidden="true" />
         Use a different email
       </Link>

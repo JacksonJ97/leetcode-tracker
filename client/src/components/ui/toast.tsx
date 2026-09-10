@@ -40,7 +40,7 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     <ToastPrimitive.Root
       data-slot="toast"
       className={cn(
-        "border-border bg-surface text-foreground focus-visible:outline-focus-ring pointer-events-auto absolute right-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-md border shadow-lg will-change-transform select-none focus-visible:outline-2 focus-visible:outline-offset-1",
+        "pointer-events-auto absolute right-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-md border border-border bg-surface text-foreground shadow-lg will-change-transform select-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring",
 
         "data-[type=info]:border-info/50 data-[type=info]:bg-info-surface",
         "data-[type=error]:border-danger/50 data-[type=error]:bg-danger-surface",
@@ -95,14 +95,11 @@ function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
   );
 }
 
-function ToastDescription({
-  className,
-  ...props
-}: ToastPrimitive.Description.Props) {
+function ToastDescription({ className, ...props }: ToastPrimitive.Description.Props) {
   return (
     <ToastPrimitive.Description
       data-slot="toast-description"
-      className={cn("text-foreground-muted text-sm", className)}
+      className={cn("text-sm text-foreground-muted", className)}
       {...props}
     />
   );
@@ -134,10 +131,7 @@ function ToastClose({
       data-slot="toast-close"
       aria-label="Close toast"
       render={render}
-      className={cn(
-        "shrink-0 hover:bg-transparent active:bg-transparent",
-        className,
-      )}
+      className={cn("shrink-0 hover:bg-transparent active:bg-transparent", className)}
       {...props}
     >
       {children ?? <XIcon aria-hidden="true" />}
@@ -165,12 +159,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   }
 
   if (type === "loading") {
-    icon = (
-      <Loader2Icon
-        aria-hidden="true"
-        className="text-foreground-muted animate-spin"
-      />
-    );
+    icon = <Loader2Icon aria-hidden="true" className="animate-spin text-foreground-muted" />;
   }
 
   if (!icon) {
@@ -178,10 +167,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
   }
 
   return (
-    <span
-      data-slot="toast-icon"
-      className="shrink-0 [&_svg]:pointer-events-none [&_svg]:size-4"
-    >
+    <span data-slot="toast-icon" className="shrink-0 [&_svg]:pointer-events-none [&_svg]:size-4">
       {icon}
     </span>
   );
@@ -205,11 +191,7 @@ function ToastList() {
   ));
 }
 
-function Toaster({
-  children,
-  toastManager = toast,
-  ...props
-}: ToastPrimitive.Provider.Props) {
+function Toaster({ children, toastManager = toast, ...props }: ToastPrimitive.Provider.Props) {
   return (
     <ToastProvider toastManager={toastManager} {...props}>
       {children}

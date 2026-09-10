@@ -31,9 +31,7 @@ function Footer() {
   return <footer className="p-4">Footer</footer>;
 }
 
-export default async function Layout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default async function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   const { data: session } = await auth.getSession({
     fetchOptions: {
       headers: await headers(),

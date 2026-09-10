@@ -55,12 +55,7 @@ function LoginForm() {
           field: { ref, name, value, onBlur, onChange },
           fieldState: { error, invalid, isDirty, isTouched },
         }) => (
-          <Field
-            name={name}
-            dirty={isDirty}
-            invalid={invalid}
-            touched={isTouched}
-          >
+          <Field name={name} dirty={isDirty} invalid={invalid} touched={isTouched}>
             <FieldLabel>Email</FieldLabel>
             <Input
               type="email"

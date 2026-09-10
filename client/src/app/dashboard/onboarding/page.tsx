@@ -28,7 +28,7 @@ export default async function OnboardingPage() {
             Let&apos;s set up your profile
           </h1>
 
-          <p className="text-foreground-muted text-sm leading-normal">
+          <p className="text-sm leading-normal text-foreground-muted">
             Add a few details to personalize your experience.
           </p>
         </header>

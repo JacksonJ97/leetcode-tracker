@@ -21,10 +21,7 @@ function DropdownMenuContent({
   className,
   ...props
 }: MenuPrimitive.Popup.Props &
-  Pick<
-    MenuPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+  Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
@@ -37,9 +34,9 @@ function DropdownMenuContent({
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
           className={cn(
-            "bg-surface ring-foreground/10 max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg p-1 shadow-lg ring-1 duration-100 outline-none",
+            "max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-surface p-1 shadow-lg ring-1 ring-foreground/10 duration-100 outline-none",
             "data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-            "data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 data-closed:overflow-hidden",
+            "data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95",
             className,
           )}
           {...props}
@@ -64,10 +61,7 @@ function DropdownMenuLabel({
     <MenuPrimitive.GroupLabel
       data-slot="dropdown-menu-label"
       data-inset={inset}
-      className={cn(
-        "text-foreground-muted p-1.5 text-xs font-medium data-inset:pl-7",
-        className,
-      )}
+      className={cn("p-1.5 text-xs font-medium text-foreground-muted data-inset:pl-7", className)}
       {...props}
     />
   );
@@ -88,7 +82,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "focus:bg-surface-interactive-hover data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-danger-surface flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-7 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-sm outline-hidden select-none focus:bg-surface-interactive-hover data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-danger-surface [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -111,7 +105,7 @@ function DropdownMenuLinkItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "focus:bg-surface-interactive-hover data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-danger-surface flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-7 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-sm outline-hidden select-none focus:bg-surface-interactive-hover data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-danger-surface [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -119,14 +113,11 @@ function DropdownMenuLinkItem({
   );
 }
 
-function DropdownMenuSeparator({
-  className,
-  ...props
-}: MenuPrimitive.Separator.Props) {
+function DropdownMenuSeparator({ className, ...props }: MenuPrimitive.Separator.Props) {
   return (
     <MenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
-      className={cn("bg-border -mx-1 my-1 h-px", className)}
+      className={cn("-mx-1 my-1 h-px bg-border", className)}
       {...props}
     />
   );

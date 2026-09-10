@@ -36,17 +36,7 @@ async function createAvatarFile(file: File): Promise<File> {
     context.imageSmoothingEnabled = true;
     context.imageSmoothingQuality = "high";
 
-    context.drawImage(
-      image,
-      sourceX,
-      sourceY,
-      cropSize,
-      cropSize,
-      0,
-      0,
-      AVATAR_SIZE,
-      AVATAR_SIZE,
-    );
+    context.drawImage(image, sourceX, sourceY, cropSize, cropSize, 0, 0, AVATAR_SIZE, AVATAR_SIZE);
 
     const blob = await new Promise<Blob>((resolve, reject) => {
       canvas.toBlob(
@@ -54,9 +44,7 @@ async function createAvatarFile(file: File): Promise<File> {
           if (result) {
             resolve(result);
           } else {
-            reject(
-              new Error("Your browser could not convert this image to WebP."),
-            );
+            reject(new Error("Your browser could not convert this image to WebP."));
           }
         },
         "image/webp",

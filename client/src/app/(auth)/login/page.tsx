@@ -19,7 +19,7 @@ export default function LoginPage() {
 
       <LoginForm />
 
-      <p className="text-foreground-muted mt-4 text-sm">
+      <p className="mt-4 text-sm text-foreground-muted">
         Don&apos;t have an account? <Link href="/signup">Sign up</Link>
       </p>
     </section>

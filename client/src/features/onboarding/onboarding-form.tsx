@@ -70,11 +70,7 @@ function OnboardingForm({ image }: { image: string | null }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      <AvatarUpload
-        upload={upload}
-        className="mb-3"
-        defaultImageUrl={image ?? ""}
-      />
+      <AvatarUpload upload={upload} className="mb-3" defaultImageUrl={image ?? ""} />
 
       <Controller
         name="firstName"
@@ -132,11 +128,7 @@ function OnboardingForm({ image }: { image: string | null }) {
         )}
       />
 
-      <Button
-        type="submit"
-        className="mt-3"
-        disabled={isSubmitting || upload.isProcessing}
-      >
+      <Button type="submit" className="mt-3" disabled={isSubmitting || upload.isProcessing}>
         {(isSubmitting || upload.isProcessing) && <Spinner />}
         {upload.isProcessing ? "Processing photo…" : "Continue"}
       </Button>

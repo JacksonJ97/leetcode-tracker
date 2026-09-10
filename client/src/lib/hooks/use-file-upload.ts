@@ -81,9 +81,7 @@ export const useFileUpload = (options: FileUploadOptions = {}) => {
         return fileType === type;
       });
 
-    return isAccepted
-      ? null
-      : `File "${file.name}" is not an accepted file type.`;
+    return isAccepted ? null : `File "${file.name}" is not an accepted file type.`;
   };
 
   const addFile = async (file: File) => {
@@ -111,9 +109,7 @@ export const useFileUpload = (options: FileUploadOptions = {}) => {
       setUploadState((prev) => ({ ...prev, file: nextFile, error: null }));
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : `File "${file.name}" could not be processed.`;
+        error instanceof Error ? error.message : `File "${file.name}" could not be processed.`;
 
       setUploadState((prev) => ({ ...prev, error: message }));
     } finally {
@@ -129,12 +125,7 @@ export const useFileUpload = (options: FileUploadOptions = {}) => {
   };
 
   const openFileDialog = () => {
-    if (
-      !disabled &&
-      !processingRef.current &&
-      inputRef.current &&
-      !inputRef.current.disabled
-    ) {
+    if (!disabled && !processingRef.current && inputRef.current && !inputRef.current.disabled) {
       inputRef.current.click();
     }
   };
@@ -192,10 +183,7 @@ export const useFileUpload = (options: FileUploadOptions = {}) => {
 
     const relatedTarget = e.relatedTarget;
 
-    if (
-      relatedTarget instanceof Node &&
-      e.currentTarget.contains(relatedTarget)
-    ) {
+    if (relatedTarget instanceof Node && e.currentTarget.contains(relatedTarget)) {
       return;
     }
 

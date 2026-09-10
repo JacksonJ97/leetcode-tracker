@@ -47,21 +47,18 @@ export const submitOnboarding = async ({
   firstName,
   lastName,
 }: OnboardingSubmission) => {
-  const response = await fetch(
-    `${env.NEXT_PUBLIC_SERVER_ORIGIN}/api/onboarding`,
-    {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        avatarUploaded,
-        firstName,
-        lastName,
-      }),
+  const response = await fetch(`${env.NEXT_PUBLIC_SERVER_ORIGIN}/api/onboarding`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify({
+      avatarUploaded,
+      firstName,
+      lastName,
+    }),
+  });
 
   if (!response.ok) {
     throw await getResponseError(response, "Failed to submit onboarding");

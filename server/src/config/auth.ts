@@ -51,8 +51,7 @@ export const auth = betterAuth({
       // Uploaded images store a bucket key; OAuth images have an HTTPS URL.
       let image = user.image;
       if (image?.startsWith("avatars/")) {
-        image =
-          image === getAvatarKey(user.id) ? await getImageUrl(image) : null;
+        image = image === getAvatarKey(user.id) ? await getImageUrl(image) : null;
       }
 
       return {

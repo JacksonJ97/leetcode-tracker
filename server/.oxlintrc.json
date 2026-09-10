@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "node": true,
+    "builtin": true
+  },
+  "ignorePatterns": ["dist", "node_modules"],
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "typescript/no-explicit-any": "error"
+  }
+}

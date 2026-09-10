@@ -3,19 +3,14 @@ import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 
 function Field({ className, ...props }: FieldPrimitive.Root.Props) {
-  return (
-    <FieldPrimitive.Root
-      className={cn("flex flex-col gap-2", className)}
-      {...props}
-    />
-  );
+  return <FieldPrimitive.Root className={cn("flex flex-col gap-2", className)} {...props} />;
 }
 
 function FieldLabel({ className, ...props }: FieldPrimitive.Label.Props) {
   return (
     <FieldPrimitive.Label
       className={cn(
-        "text-foreground data-invalid:text-danger text-sm font-medium data-disabled:opacity-50",
+        "text-sm font-medium text-foreground data-disabled:opacity-50 data-invalid:text-danger",
         className,
       )}
       {...props}
@@ -26,10 +21,7 @@ function FieldLabel({ className, ...props }: FieldPrimitive.Label.Props) {
 function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <FieldPrimitive.Description
-      className={cn(
-        "text-foreground-muted text-sm data-disabled:opacity-50",
-        className,
-      )}
+      className={cn("text-sm text-foreground-muted data-disabled:opacity-50", className)}
       {...props}
     />
   );
@@ -38,7 +30,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
 function FieldError({ className, ...props }: FieldPrimitive.Error.Props) {
   return (
     <FieldPrimitive.Error
-      className={cn("text-danger text-sm data-disabled:opacity-50", className)}
+      className={cn("text-sm text-danger data-disabled:opacity-50", className)}
       {...props}
     />
   );
@@ -48,26 +40,15 @@ function FieldItem(props: FieldPrimitive.Item.Props) {
   return <FieldPrimitive.Item {...props} />;
 }
 
-function FieldSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function FieldSeparator({ children, className, ...props }: React.ComponentProps<"div">) {
   return (
     <div className={cn("relative", className)} {...props}>
       <Separator className="absolute inset-0 top-1/2" />
-      <span className="bg-background text-foreground relative mx-auto block w-fit px-3 text-sm">
+      <span className="relative mx-auto block w-fit bg-background px-3 text-sm text-foreground">
         {children}
       </span>
     </div>
   );
 }
 
-export {
-  Field,
-  FieldLabel,
-  FieldDescription,
-  FieldError,
-  FieldItem,
-  FieldSeparator,
-};
+export { Field, FieldLabel, FieldDescription, FieldError, FieldItem, FieldSeparator };

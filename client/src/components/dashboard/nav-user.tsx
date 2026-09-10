@@ -26,8 +26,7 @@ export default function NavUser({ user }: { user: User }) {
 
   const names = user.name.trim().split(/\s+/);
 
-  const initials =
-    names.length === 1 ? names[0][0] : names[0][0] + names[names.length - 1][0];
+  const initials = names.length === 1 ? names[0][0] : names[0][0] + names[names.length - 1][0];
 
   return (
     <DropdownMenu>
@@ -43,9 +42,7 @@ export default function NavUser({ user }: { user: User }) {
             </Avatar>
             <div className="grid gap-px truncate text-left text-sm font-normal">
               <span>{user.name}</span>
-              <span className="text-foreground-muted text-xs">
-                {user.email}
-              </span>
+              <span className="text-xs text-foreground-muted">{user.email}</span>
             </div>
           </SidebarMenuButton>
         }

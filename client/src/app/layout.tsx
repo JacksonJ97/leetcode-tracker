@@ -21,14 +21,9 @@ export const metadata: Metadata = {
   description: "Track your Leetcode progress",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${geist.variable} ${geistMono.variable} antialiased`}
-    >
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} antialiased`}>
       <body className="flex min-h-svh flex-col">
         <div className="isolate">
           <TooltipProvider>{children}</TooltipProvider>

@@ -1,11 +1,8 @@
 import { EMAIL_OTP_ERROR_CODES } from "better-auth/client/plugins";
 
-const TOO_MANY_REQUESTS_MESSAGE =
-  "Too many requests. Wait a moment and try again.";
-const VERIFY_EMAIL_ERROR_MESSAGE =
-  "We couldn't verify your code. Please try again.";
-const DEFAULT_OAUTH_ERROR_MESSAGE =
-  "We couldn't sign you in. Please try again.";
+const TOO_MANY_REQUESTS_MESSAGE = "Too many requests. Wait a moment and try again.";
+const VERIFY_EMAIL_ERROR_MESSAGE = "We couldn't verify your code. Please try again.";
+const DEFAULT_OAUTH_ERROR_MESSAGE = "We couldn't sign you in. Please try again.";
 
 const EXPIRED_OAUTH_ERRORS = new Set([
   "invalid_code",
@@ -21,8 +18,7 @@ const OAUTH_ERROR_MESSAGES: Record<string, string> = {
   account_already_linked_to_different_user:
     "This account is already being used. Try a different account.",
   account_not_linked: "Please sign in using the method you originally used.",
-  email_not_found:
-    "We couldn't access a verified email address from this account.",
+  email_not_found: "We couldn't access a verified email address from this account.",
   "email_doesn't_match": "Please use an account with the same email address.",
   signup_disabled: "New account registration is currently unavailable.",
 };
@@ -46,8 +42,7 @@ function getSendOTPErrorMessage(status: number) {
 }
 
 const OTP_ERROR_MESSAGES: Record<string, string> = {
-  [EMAIL_OTP_ERROR_CODES.INVALID_OTP.code]:
-    "That verification code is incorrect. Try again.",
+  [EMAIL_OTP_ERROR_CODES.INVALID_OTP.code]: "That verification code is incorrect. Try again.",
   [EMAIL_OTP_ERROR_CODES.OTP_EXPIRED.code]:
     "That verification code has expired. Go back to request a new code.",
   [EMAIL_OTP_ERROR_CODES.TOO_MANY_ATTEMPTS.code]:

@@ -1,17 +1,8 @@
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import { cn } from "@/lib/utils";
 
-function TooltipProvider({
-  delay = 0,
-  ...props
-}: TooltipPrimitive.Provider.Props) {
-  return (
-    <TooltipPrimitive.Provider
-      data-slot="tooltip-provider"
-      delay={delay}
-      {...props}
-    />
-  );
+function TooltipProvider({ delay = 0, ...props }: TooltipPrimitive.Provider.Props) {
+  return <TooltipPrimitive.Provider data-slot="tooltip-provider" delay={delay} {...props} />;
 }
 
 function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
@@ -31,10 +22,7 @@ function TooltipContent({
   children,
   ...props
 }: TooltipPrimitive.Popup.Props &
-  Pick<
-    TooltipPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+  Pick<TooltipPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
   return (
     <TooltipPrimitive.Portal>
       <TooltipPrimitive.Positioner
@@ -47,8 +35,8 @@ function TooltipContent({
         <TooltipPrimitive.Popup
           data-slot="tooltip-content"
           className={cn(
-            "bg-foreground text-foreground-on-primary inline-flex max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-md px-3 py-1.5 text-xs duration-100",
-            "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+            "inline-flex max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs text-foreground-on-primary duration-100",
+            "data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
             "data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95",
             "data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
             className,
@@ -58,7 +46,7 @@ function TooltipContent({
           {children}
           <TooltipPrimitive.Arrow
             className={cn(
-              "bg-foreground size-2.5 rotate-45 rounded-xs",
+              "size-2.5 rotate-45 rounded-xs bg-foreground",
               "data-[side=bottom]:-top-1 data-[side=top]:-bottom-1",
               "data-[side=inline-start]:-right-1 data-[side=left]:-right-1",
               "data-[side=inline-end]:-left-1 data-[side=right]:-left-1",

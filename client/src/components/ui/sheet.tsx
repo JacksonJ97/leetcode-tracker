@@ -49,7 +49,7 @@ function SheetContent({
         data-slot="sheet-content"
         data-side={side}
         className={cn(
-          "bg-background border-border fixed z-50 flex flex-col gap-4 p-4 text-sm transition-[translate,opacity] duration-200 ease-in-out data-ending-style:opacity-0 data-starting-style:opacity-0",
+          "fixed z-50 flex flex-col gap-4 border-border bg-background p-4 text-sm transition-[translate,opacity] duration-200 ease-in-out data-ending-style:opacity-0 data-starting-style:opacity-0",
           "data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=right]:data-ending-style:translate-x-full data-[side=right]:data-starting-style:translate-x-full data-[side=right]:sm:max-w-sm",
           "data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=left]:data-ending-style:-translate-x-full data-[side=left]:data-starting-style:-translate-x-full data-[side=left]:sm:max-w-sm",
           "data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:max-h-[50dvh] data-[side=top]:border-b data-[side=top]:data-ending-style:-translate-y-full data-[side=top]:data-starting-style:-translate-y-full",
@@ -63,11 +63,7 @@ function SheetContent({
           <SheetPrimitive.Close
             data-slot="sheet-close"
             render={
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                className="absolute top-3 right-3"
-              >
+              <Button size="icon-sm" variant="ghost" className="absolute top-3 right-3">
                 <XIcon />
                 <span className="sr-only">Close</span>
               </Button>
@@ -81,11 +77,7 @@ function SheetContent({
 
 function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="sheet-header"
-      className={cn("flex flex-col gap-0.5", className)}
-      {...props}
-    />
+    <div data-slot="sheet-header" className={cn("flex flex-col gap-0.5", className)} {...props} />
   );
 }
 
@@ -99,10 +91,7 @@ function SheetTitle({ className, ...props }: SheetPrimitive.Title.Props) {
   );
 }
 
-function SheetDescription({
-  className,
-  ...props
-}: SheetPrimitive.Description.Props) {
+function SheetDescription({ className, ...props }: SheetPrimitive.Description.Props) {
   return (
     <SheetPrimitive.Description
       data-slot="sheet-description"

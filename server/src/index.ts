@@ -126,8 +126,7 @@ app.put(
   zValidator("json", onboardingSchema, (result) => {
     if (!result.success) {
       throw new HTTPException(400, {
-        message:
-          result.error.issues[0]?.message ?? "Invalid onboarding details",
+        message: result.error.issues[0]?.message ?? "Invalid onboarding details",
       });
     }
   }),
@@ -159,9 +158,7 @@ app.put(
       .set({
         firstName,
         lastName,
-        image: avatarUploaded
-          ? getAvatarKey(context.var.user.id)
-          : existingUser.image,
+        image: avatarUploaded ? getAvatarKey(context.var.user.id) : existingUser.image,
         name: `${firstName} ${lastName}`,
         onboardingCompletedAt: new Date(),
       })
