@@ -1,8 +1,8 @@
 "use client";
 
 import { XIcon, UserIcon, PlusIcon, CircleAlertIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatBytes, useFileUpload, type FileWithPreview } from "@/lib/hooks";
+import { cn, formatBytes } from "@/lib/utils";
+import type { AvatarUploadController } from "@/lib/hooks/use-avatar-upload";
 import {
   Avatar,
   AvatarImage,
@@ -12,129 +12,44 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
-const AVATAR_SIZE = 256;
-const WEBP_QUALITY = 0.85;
-
-async function createAvatarFile(file: File): Promise<File> {
-  let image: ImageBitmap;
-
-  try {
-    image = await createImageBitmap(file, { imageOrientation: "from-image" });
-  } catch {
-    throw new Error(`File "${file.name}" is not a valid image.`);
-  }
-
-  try {
-    const cropSize = Math.min(image.width, image.height);
-    const sourceX = (image.width - cropSize) / 2;
-    const sourceY = (image.height - cropSize) / 2;
-    const canvas = document.createElement("canvas");
-    canvas.width = AVATAR_SIZE;
-    canvas.height = AVATAR_SIZE;
-
-    const context = canvas.getContext("2d");
-
-    if (!context) {
-      throw new Error("Your browser could not process this image.");
-    }
-
-    context.imageSmoothingEnabled = true;
-    context.imageSmoothingQuality = "high";
-    context.drawImage(
-      image,
-      sourceX,
-      sourceY,
-      cropSize,
-      cropSize,
-      0,
-      0,
-      AVATAR_SIZE,
-      AVATAR_SIZE,
-    );
-
-    const blob = await new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob(
-        (result) => {
-          if (result) {
-            resolve(result);
-          } else {
-            reject(
-              new Error("Your browser could not convert this image to WebP."),
-            );
-          }
-        },
-        "image/webp",
-        WEBP_QUALITY,
-      );
-    });
-
-    const baseName = file.name.replace(/\.[^.]+$/, "") || "avatar";
-
-    return new File([blob], `${baseName}.webp`, {
-      type: "image/webp",
-      lastModified: Date.now(),
-    });
-  } finally {
-    image.close();
-  }
-}
-
 interface AvatarUploadProps {
-  maxSize?: number;
+  upload: AvatarUploadController;
   className?: string;
-  onFileChange?: (file: FileWithPreview | null) => void;
   defaultImageUrl?: string;
 }
 
 export function AvatarUpload({
-  maxSize = 2 * 1024 * 1024, // 2MB
+  upload,
   className,
-  onFileChange,
   defaultImageUrl,
 }: AvatarUploadProps) {
-  const [
-    { file: currentFile, error, isDragging },
-    {
-      removeFile,
-      handleDrop,
-      handleClick,
-      handleKeyDown,
-      handleDragOver,
-      handleDragEnter,
-      handleDragLeave,
-      getInputProps,
-    },
-  ] = useFileUpload({
+  const {
+    file: currentFile,
+    error,
     maxSize,
-    accept: "image/jpeg,image/png,image/webp",
-    onFileChange,
-    transformFile: createAvatarFile,
-  });
+    isDisabled,
+    isDragging,
+    inputProps,
+    triggerProps,
+    dropZoneProps,
+    removeFile,
+  } = upload;
 
-  const previewUrl = currentFile?.preview || defaultImageUrl;
+  const previewUrl = upload.previewUrl || defaultImageUrl;
 
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       <div className="flex items-center gap-4">
-        <div
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          className="relative"
-        >
+        <div {...dropZoneProps} className="relative">
           <Avatar
+            {...triggerProps}
             size="xl"
-            role="button"
-            tabIndex={0}
-            className="focus-visible:outline-focus-ring cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1"
+            className="focus-visible:outline-focus-ring cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 aria-disabled:cursor-default aria-disabled:opacity-50"
             aria-label={
               previewUrl ? "Change profile photo" : "Select profile photo"
             }
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
           >
-            <input tabIndex={-1} className="sr-only" {...getInputProps()} />
+            <input tabIndex={-1} className="sr-only" {...inputProps} />
 
             {previewUrl ? (
               <AvatarImage src={previewUrl} alt="Avatar" />
@@ -142,7 +57,9 @@ export function AvatarUpload({
               <>
                 <AvatarFallback
                   className={cn(
-                    "text-foreground-muted border-border border-[1.5px] border-dashed transition-colors hover:border-(--gray-400)",
+                    "text-foreground-muted border border-dashed border-(--gray-600) transition-colors",
+                    !isDisabled &&
+                      "hover:border-(--gray-400) hover:bg-(--gray-800)",
                     isDragging && "border-(--gray-400) bg-(--gray-800)",
                   )}
                 >
@@ -159,12 +76,10 @@ export function AvatarUpload({
             <Button
               size="icon"
               variant="outline"
+              disabled={isDisabled}
               aria-label="Remove avatar"
-              onClick={(event) => {
-                event.stopPropagation();
-                removeFile();
-              }}
-              className="ring-background absolute top-0.5 right-0.5 z-10 size-5 rounded-full border-transparent bg-zinc-800 ring-2 hover:bg-zinc-700"
+              onClick={removeFile}
+              className="ring-background absolute top-0.5 right-0.5 z-10 size-5 rounded-full border-transparent bg-(--gray-800) ring-2 hover:bg-(--gray-700)"
             >
               <XIcon className="size-3.5" />
             </Button>

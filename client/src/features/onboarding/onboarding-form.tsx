@@ -1,8 +1,12 @@
 "use client";
 
 import z from "zod";
+import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAvatarUpload } from "@/lib/hooks/use-avatar-upload";
+import { uploadAvatar, submitOnboarding } from "@/data/user/api";
+import { toast } from "@/components/ui/toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -14,7 +18,9 @@ const schema = z.object({
   lastName: z.string().trim().min(1, "Enter your last name"),
 });
 
-function OnboardingForm({ image }: { image: string }) {
+function OnboardingForm({ image }: { image: string | null }) {
+  const router = useRouter();
+
   const {
     control,
     handleSubmit,
@@ -27,18 +33,47 @@ function OnboardingForm({ image }: { image: string }) {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log("data", data);
+  const upload = useAvatarUpload({ disabled: isSubmitting });
+
+  const onSubmit = handleSubmit(async (data) => {
+    if (upload.isProcessing) return;
+
+    const file = upload.file;
+
+    try {
+      if (file) {
+        await uploadAvatar(file);
+      }
+
+      await submitOnboarding({
+        avatarUploaded: file !== null,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      });
+    } catch (error) {
+      toast.add({
+        type: "error",
+        description:
+          error instanceof Error &&
+          !(error instanceof TypeError) &&
+          !(error instanceof SyntaxError) &&
+          error.message
+            ? error.message
+            : "Couldn't finish setting up your profile. Please try again.",
+      });
+
+      return;
+    }
+
+    router.replace("/dashboard");
   });
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <AvatarUpload
+        upload={upload}
         className="mb-3"
-        defaultImageUrl={image}
-        onFileChange={(file) => {
-          console.log("file", file);
-        }}
+        defaultImageUrl={image ?? ""}
       />
 
       <Controller
@@ -53,6 +88,7 @@ function OnboardingForm({ image }: { image: string }) {
             dirty={isDirty}
             invalid={invalid}
             touched={isTouched}
+            disabled={isSubmitting}
           >
             <FieldLabel>First name</FieldLabel>
             <Input
@@ -80,6 +116,7 @@ function OnboardingForm({ image }: { image: string }) {
             dirty={isDirty}
             invalid={invalid}
             touched={isTouched}
+            disabled={isSubmitting}
           >
             <FieldLabel>Last name</FieldLabel>
             <Input
@@ -95,9 +132,13 @@ function OnboardingForm({ image }: { image: string }) {
         )}
       />
 
-      <Button type="submit" className="mt-3" disabled={isSubmitting}>
-        {isSubmitting && <Spinner />}
-        Continue
+      <Button
+        type="submit"
+        className="mt-3"
+        disabled={isSubmitting || upload.isProcessing}
+      >
+        {(isSubmitting || upload.isProcessing) && <Spinner />}
+        {upload.isProcessing ? "Processing photo…" : "Continue"}
       </Button>
     </form>
   );

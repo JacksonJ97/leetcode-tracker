@@ -18,7 +18,7 @@ import { useLogout } from "@/features/auth/helpers";
 type User = {
   name: string;
   email: string;
-  avatar: string;
+  image: string | null;
 };
 
 export default function NavUser({ user }: { user: User }) {
@@ -38,10 +38,7 @@ export default function NavUser({ user }: { user: User }) {
             className="h-14 group-data-[collapsible=icon]:p-1.5"
           >
             <Avatar size="sm">
-              <AvatarImage
-                src={user.avatar ? user.avatar : ""}
-                alt={user.name}
-              />
+              <AvatarImage src={user.image ? user.image : ""} alt={user.name} />
               <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
             <div className="grid gap-px truncate text-left text-sm font-normal">

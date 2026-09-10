@@ -1,34 +1,5 @@
-"use client";
-
-import {
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-  useSyncExternalStore,
-} from "react";
-
-export function useIsMobile(mobileBreakpoint = 768) {
-  const query = `(max-width: ${mobileBreakpoint - 1}px)`;
-
-  const subscribe = useCallback(
-    (onStoreChange: () => void) => {
-      const mediaQuery = window.matchMedia(query);
-      mediaQuery.addEventListener("change", onStoreChange);
-
-      return () => mediaQuery.removeEventListener("change", onStoreChange);
-    },
-    [query],
-  );
-
-  const getSnapshot = useCallback(
-    () => window.matchMedia(query).matches,
-    [query],
-  );
-  const getServerSnapshot = useCallback(() => false, []);
-
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-}
+import { useRef, useState, useEffect } from "react";
+import { formatBytes } from "@/lib/utils";
 
 export type FileWithPreview = {
   file: File;
@@ -38,8 +9,7 @@ export type FileWithPreview = {
 export type FileUploadOptions = {
   accept?: string;
   maxSize?: number; // in bytes
-  onError?: (error: string) => void;
-  onFileChange?: (file: FileWithPreview | null) => void;
+  disabled?: boolean;
   transformFile?: (file: File) => Promise<File>;
 };
 
@@ -47,32 +17,14 @@ export type FileUploadState = {
   file: FileWithPreview | null;
   error: string | null;
   isDragging: boolean;
+  isProcessing: boolean;
 };
 
-export type FileUploadActions = {
-  removeFile: () => void;
-  clearError: () => void;
-  handleDrop: (e: React.DragEvent<HTMLElement>) => void;
-  handleClick: (e: React.MouseEvent<HTMLElement>) => void;
-  handleKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
-  handleDragOver: (e: React.DragEvent<HTMLElement>) => void;
-  handleDragEnter: (e: React.DragEvent<HTMLElement>) => void;
-  handleDragLeave: (e: React.DragEvent<HTMLElement>) => void;
-  getInputProps: (
-    props?: React.InputHTMLAttributes<HTMLInputElement>,
-  ) => React.InputHTMLAttributes<HTMLInputElement> & {
-    ref: React.Ref<HTMLInputElement>;
-  };
-};
-
-export const useFileUpload = (
-  options: FileUploadOptions = {},
-): [FileUploadState, FileUploadActions] => {
+export const useFileUpload = (options: FileUploadOptions = {}) => {
   const {
     accept = "*",
-    maxSize = Number.POSITIVE_INFINITY,
-    onError,
-    onFileChange,
+    maxSize = 8 * 1024 * 1024, // 8 MB in bytes
+    disabled = false,
     transformFile,
   } = options;
 
@@ -80,10 +32,13 @@ export const useFileUpload = (
     file: null,
     error: null,
     isDragging: false,
+    isProcessing: false,
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const processingRef = useRef(false);
   const preview = uploadState.file?.preview;
+  const isDisabled = disabled || uploadState.isProcessing;
 
   useEffect(() => {
     if (!preview) {
@@ -100,26 +55,31 @@ export const useFileUpload = (
       return `File "${file.name}" exceeds the maximum size of ${formatBytes(maxSize)}.`;
     }
 
-    if (accept === "*" || accept === "*/*") {
-      return null;
-    }
+    const acceptedTypes = accept
+      .split(",")
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean);
 
     const fileName = file.name.toLowerCase();
     const fileType = file.type.toLowerCase();
 
-    const isAccepted = accept.split(",").some((value) => {
-      const acceptedType = value.trim().toLowerCase();
+    const isAccepted =
+      acceptedTypes.length === 0 ||
+      acceptedTypes.some((type) => {
+        if (type === "*" || type === "*/*") {
+          return true;
+        }
 
-      if (acceptedType.startsWith(".")) {
-        return fileName.endsWith(acceptedType);
-      }
+        if (type.startsWith(".")) {
+          return fileName.endsWith(type);
+        }
 
-      if (acceptedType.endsWith("/*")) {
-        return fileType.startsWith(acceptedType.slice(0, -1));
-      }
+        if (type.endsWith("/*")) {
+          return fileType.startsWith(type.slice(0, -1));
+        }
 
-      return fileType === acceptedType;
-    });
+        return fileType === type;
+      });
 
     return isAccepted
       ? null
@@ -127,18 +87,18 @@ export const useFileUpload = (
   };
 
   const addFile = async (file: File) => {
+    if (disabled || processingRef.current) return;
+
     const validationError = validateFile(file);
 
     if (validationError) {
       setUploadState((prev) => ({ ...prev, error: validationError }));
-      onError?.(validationError);
-
-      if (inputRef.current) {
-        inputRef.current.value = "";
-      }
 
       return;
     }
+
+    processingRef.current = true;
+    setUploadState((prev) => ({ ...prev, isProcessing: true }));
 
     try {
       const processedFile = transformFile ? await transformFile(file) : file;
@@ -149,7 +109,6 @@ export const useFileUpload = (
       };
 
       setUploadState((prev) => ({ ...prev, file: nextFile, error: null }));
-      onFileChange?.(nextFile);
     } catch (error) {
       const message =
         error instanceof Error
@@ -157,32 +116,25 @@ export const useFileUpload = (
           : `File "${file.name}" could not be processed.`;
 
       setUploadState((prev) => ({ ...prev, error: message }));
-      onError?.(message);
     } finally {
-      if (inputRef.current) {
-        inputRef.current.value = "";
-      }
+      processingRef.current = false;
+      setUploadState((prev) => ({ ...prev, isProcessing: false }));
     }
   };
 
   const removeFile = () => {
-    setUploadState((prev) => {
-      if (inputRef.current) {
-        inputRef.current.value = "";
-      }
+    if (disabled || processingRef.current) return;
 
-      return { ...prev, file: null, error: null };
-    });
-
-    onFileChange?.(null);
-  };
-
-  const clearError = () => {
-    setUploadState((prev) => ({ ...prev, error: null }));
+    setUploadState((prev) => ({ ...prev, file: null, error: null }));
   };
 
   const openFileDialog = () => {
-    if (inputRef.current && !inputRef.current.disabled) {
+    if (
+      !disabled &&
+      !processingRef.current &&
+      inputRef.current &&
+      !inputRef.current.disabled
+    ) {
       inputRef.current.click();
     }
   };
@@ -260,42 +212,36 @@ export const useFileUpload = (
     }
   };
 
-  const getInputProps = (
-    props: React.InputHTMLAttributes<HTMLInputElement> = {},
-  ) => {
-    return {
-      ...props,
-      accept,
-      ref: inputRef,
-      type: "file" as const,
-      onChange: handleFileChange,
-    };
+  const inputProps = {
+    accept,
+    ref: inputRef,
+    type: "file" as const,
+    disabled: isDisabled,
+    onChange: handleFileChange,
   };
 
-  return [
-    uploadState,
-    {
-      removeFile,
-      clearError,
-      handleDrop,
-      handleClick,
-      handleKeyDown,
-      handleDragOver,
-      handleDragEnter,
-      handleDragLeave,
-      getInputProps,
+  return {
+    file: uploadState.file?.file ?? null,
+    previewUrl: preview,
+    error: uploadState.error,
+    isDragging: uploadState.isDragging,
+    isProcessing: uploadState.isProcessing,
+    removeFile,
+    isDisabled,
+    inputProps,
+    triggerProps: {
+      role: "button" as const,
+      tabIndex: isDisabled ? -1 : 0,
+      "aria-disabled": isDisabled,
+      "aria-busy": uploadState.isProcessing,
+      onClick: handleClick,
+      onKeyDown: handleKeyDown,
     },
-  ];
-};
-
-export const formatBytes = (bytes: number, decimals = 2): string => {
-  if (bytes === 0) return "0 Bytes";
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return Number.parseFloat((bytes / k ** i).toFixed(dm)) + sizes[i];
+    dropZoneProps: {
+      onDrop: handleDrop,
+      onDragOver: handleDragOver,
+      onDragEnter: handleDragEnter,
+      onDragLeave: handleDragLeave,
+    },
+  };
 };

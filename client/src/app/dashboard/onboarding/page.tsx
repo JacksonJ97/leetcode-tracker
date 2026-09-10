@@ -18,6 +18,8 @@ export default async function OnboardingPage() {
     redirect("/dashboard");
   }
 
+  const image = session.user.image ?? null;
+
   return (
     <main className="grid min-h-svh place-items-center p-4">
       <section className="w-full max-w-sm">
@@ -31,7 +33,7 @@ export default async function OnboardingPage() {
           </p>
         </header>
 
-        <OnboardingForm image={session.user.image || ""} />
+        <OnboardingForm image={image} />
       </section>
     </main>
   );

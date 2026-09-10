@@ -1,9 +1,10 @@
-import { emailOTP } from "better-auth/plugins";
+import { emailOTP, customSession } from "better-auth/plugins";
 import { betterAuth } from "better-auth/minimal";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
-import { db } from "@/db/client";
 import { env } from "@/config/env";
 import { resend } from "@/config/email";
+import { getImageUrl, getAvatarKey } from "@/config/storage";
+import { db } from "@/db/client";
 import * as schema from "@/db/schemas/auth-schema";
 
 export const auth = betterAuth({
@@ -46,6 +47,22 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    customSession(async ({ user, session }) => {
+      // Uploaded images store a bucket key; OAuth images have an HTTPS URL.
+      let image = user.image;
+      if (image?.startsWith("avatars/")) {
+        image =
+          image === getAvatarKey(user.id) ? await getImageUrl(image) : null;
+      }
+
+      return {
+        session,
+        user: {
+          ...user,
+          image,
+        },
+      };
+    }),
     emailOTP({
       async sendVerificationOTP({ otp, type, email }) {
         if (type == "sign-in") {

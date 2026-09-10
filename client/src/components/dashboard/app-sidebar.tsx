@@ -60,7 +60,7 @@ const links = [
 type User = {
   name: string;
   email: string;
-  avatar: string;
+  image: string | null;
 };
 
 export default function AppSidebar({ user }: { user: User }) {

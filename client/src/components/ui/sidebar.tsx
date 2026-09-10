@@ -12,7 +12,7 @@ import { PanelLeftIcon } from "lucide-react";
 import { useRender } from "@base-ui/react/use-render";
 import { mergeProps } from "@base-ui/react/merge-props";
 import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/lib/hooks";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
