@@ -3,7 +3,10 @@ import { emailOTPClient, inferAdditionalFields } from "better-auth/client/plugin
 import { env } from "@/lib/env";
 
 export const auth = createAuthClient({
-  baseURL: env.NEXT_PUBLIC_SERVER_ORIGIN,
+  // Browser requests use the frontend proxy so session cookies belong to the frontend.
+  // Server components call the API directly and forward the incoming cookies.
+  baseURL:
+    typeof window === "undefined" ? env.NEXT_PUBLIC_SERVER_ORIGIN : env.NEXT_PUBLIC_CLIENT_ORIGIN,
   fetchOptions: {
     credentials: "include",
   },

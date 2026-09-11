@@ -8,7 +8,8 @@ import { db } from "@/db/client";
 import * as schema from "@/db/schemas/auth-schema";
 
 export const auth = betterAuth({
-  baseURL: env.SERVER_ORIGIN,
+  // Auth is exposed through the frontend's /api proxy, including OAuth callbacks.
+  baseURL: env.CLIENT_ORIGIN,
   secret: env.BETTER_AUTH_SECRET,
   trustedOrigins: [env.CLIENT_ORIGIN],
   database: drizzleAdapter(db, {

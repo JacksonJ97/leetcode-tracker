@@ -1,4 +1,3 @@
-import { env } from "@/lib/env";
 import type { OnboardingSubmission } from "@/data/user/types";
 
 async function getResponseError(response: Response, action: string) {
@@ -28,7 +27,7 @@ async function getResponseError(response: Response, action: string) {
 }
 
 export const uploadAvatar = async (file: File) => {
-  const response = await fetch(`${env.NEXT_PUBLIC_SERVER_ORIGIN}/api/avatar`, {
+  const response = await fetch("/api/avatar", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -47,7 +46,7 @@ export const submitOnboarding = async ({
   firstName,
   lastName,
 }: OnboardingSubmission) => {
-  const response = await fetch(`${env.NEXT_PUBLIC_SERVER_ORIGIN}/api/onboarding`, {
+  const response = await fetch("/api/onboarding", {
     method: "PUT",
     credentials: "include",
     headers: {
