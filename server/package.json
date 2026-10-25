@@ -18,28 +18,28 @@
     "db:restart": "docker compose restart postgres"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1141.0",
-    "@aws-sdk/s3-request-presigner": "^3.1141.0",
-    "@better-auth/drizzle-adapter": "1.7.6",
-    "@hono/node-server": "^2.1.1",
+    "@aws-sdk/client-s3": "^3.1156.0",
+    "@aws-sdk/s3-request-presigner": "^3.1156.0",
+    "@better-auth/drizzle-adapter": "1.7.12",
+    "@hono/node-server": "^2.1.5",
     "@hono/zod-validator": "^0.9.1",
-    "better-auth": "1.7.6",
-    "dotenv": "^18.0.4",
-    "drizzle-orm": "1.0.0-rc.4",
-    "hono": "^4.13.9",
-    "pg": "^8.23.0",
-    "resend": "^6.30.0",
-    "sharp": "^0.35.4",
-    "zod": "^4.6.5"
+    "better-auth": "1.7.12",
+    "dotenv": "^18.0.9",
+    "drizzle-orm": "1.0.0-rc.5",
+    "hono": "^4.13.13",
+    "pg": "^8.23.1",
+    "resend": "^6.34.1",
+    "sharp": "^0.35.5",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@types/node": "^26.6.3",
+    "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
-    "drizzle-kit": "1.0.0-rc.4",
-    "oxfmt": "^0.70.0",
-    "oxlint": "^1.85.0",
-    "tsc-alias": "^1.9.5",
+    "drizzle-kit": "1.0.0-rc.5",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
+    "tsc-alias": "^1.9.9",
     "tsx": "^4.23.15",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
