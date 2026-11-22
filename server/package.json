@@ -27,7 +27,7 @@
     "@hono/zod-validator": "^0.9.1",
     "better-auth": "1.7.27",
     "dotenv": "^18.0.10",
-    "drizzle-orm": "1.0.0-rc.5",
+    "drizzle-orm": "1.0.0-rc.6",
     "hono": "^4.13.19",
     "pg": "^8.23.1",
     "resend": "^6.39.0",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@types/node": "^26.6.6",
     "@types/pg": "^8.23.1",
-    "drizzle-kit": "1.0.0-rc.5",
+    "drizzle-kit": "1.0.0-rc.6",
     "oxfmt": "^0.79.0",
     "oxlint": "^1.94.0",
     "tsc-alias": "^1.9.10",

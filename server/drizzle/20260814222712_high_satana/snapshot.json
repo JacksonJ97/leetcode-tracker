@@ -1,6 +1,6 @@
 {
   "type": "base",
-  "version": "9",
+  "version": "10",
   "dialect": "postgres",
   "id": "13d18ed8-ff39-4e92-988e-81d7b75c0b48",
   "prevIds": [
@@ -718,7 +718,6 @@
       "where": null,
       "with": "",
       "method": "btree",
-      "concurrently": false,
       "entityType": "indexes"
     },
     {
@@ -739,7 +738,6 @@
       "where": null,
       "with": "",
       "method": "btree",
-      "concurrently": false,
       "entityType": "indexes"
     },
     {
@@ -760,7 +758,6 @@
       "where": null,
       "with": "",
       "method": "btree",
-      "concurrently": false,
       "entityType": "indexes"
     },
     {
@@ -781,7 +778,6 @@
       "where": null,
       "with": "",
       "method": "btree",
-      "concurrently": false,
       "entityType": "indexes"
     },
     {
