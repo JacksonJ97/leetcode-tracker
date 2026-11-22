@@ -1,5 +1,7 @@
 {
-  "name": "server",
+  "name": "leetcode-tracker-server",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
   "main": "dist/src/index.js",
   "scripts": {
@@ -18,27 +20,27 @@
     "db:restart": "docker compose restart postgres"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1156.0",
-    "@aws-sdk/s3-request-presigner": "^3.1156.0",
-    "@better-auth/drizzle-adapter": "1.7.12",
-    "@hono/node-server": "^2.1.5",
+    "@aws-sdk/client-s3": "^3.1175.0",
+    "@aws-sdk/s3-request-presigner": "^3.1175.0",
+    "@better-auth/drizzle-adapter": "1.7.27",
+    "@hono/node-server": "^2.1.11",
     "@hono/zod-validator": "^0.9.1",
-    "better-auth": "1.7.12",
-    "dotenv": "^18.0.9",
+    "better-auth": "1.7.27",
+    "dotenv": "^18.0.10",
     "drizzle-orm": "1.0.0-rc.5",
-    "hono": "^4.13.13",
+    "hono": "^4.13.19",
     "pg": "^8.23.1",
-    "resend": "^6.34.1",
+    "resend": "^6.39.0",
     "sharp": "^0.35.5",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@types/node": "^26.6.5",
+    "@types/node": "^26.6.6",
     "@types/pg": "^8.23.1",
     "drizzle-kit": "1.0.0-rc.5",
-    "oxfmt": "^0.74.0",
-    "oxlint": "^1.89.0",
-    "tsc-alias": "^1.9.9",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
+    "tsc-alias": "^1.9.10",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
   }

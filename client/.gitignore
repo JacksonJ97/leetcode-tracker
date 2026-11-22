@@ -1,26 +1,7 @@
-# Dependencies
-/node_modules
-
-# Next.js
-/.next/
-/out/
-
-# Production
-/build
-
-# Misc
-.DS_Store
-
-# Debug
-npm-debug.log*
-.pnpm-debug.log*
-
-# Env files
 .env
-
-# Vercel
-.vercel
-
-# TypeScript
-*.tsbuildinfo
+.next
+out
+build
+node_modules
 next-env.d.ts
+*.tsbuildinfo
